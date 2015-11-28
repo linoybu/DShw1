@@ -62,13 +62,16 @@ void Trainer::addPokimon(Pokimon& pokimon) {
 }
 void Trainer::removePokimon(pair<int, int>& key) {
 
-	(this->pokimonTree).deleteVertice(key);
-
-	//check if we removed the "bestPokimon"
+	//prepare data to check if we will removed the "bestPokimon"
 	int idBest = this->bestPokimon->getId(), levelBest =
 			this->bestPokimon->getLevel();
 	pair<int, int> keyBest = pair<int, int>(levelBest, idBest);
 	CompareKeysForTrainerTree compare = CompareKeysForTrainerTree();
+
+	//delete pokimon:
+	(this->pokimonTree).deleteVertice(key);
+
+	//check if we will removed the "bestPokimon"
 	try {
 		if (compare(key, keyBest) == 0) {
 			this->setBestPokimon(this->findBestPokimon());
@@ -76,6 +79,8 @@ void Trainer::removePokimon(pair<int, int>& key) {
 	} catch (EmptyTree& e) {
 		this->setBestPokimon(NULL);
 	}
+
+
 }
 
 Pokimon* Trainer::findBestPokimon() {
