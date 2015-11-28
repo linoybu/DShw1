@@ -6,6 +6,7 @@
 #include <math.h>
 #include <cstdlib>
 #include <stddef.h>
+#include <new>
 //using std::cout;
 //using std::endl;
 
@@ -65,6 +66,9 @@ Node<T, Key>::Node(T* value, Key* key, Node<T, Key>* father,
 		Node<T, Key>* rightSon, Node<T, Key>* leftSon, int height) :
 		father(father), leftSon(leftSon), rightSon(rightSon), value(
 				new T(*value)), key(new Key(*key)), height(height) {
+	if(!value||!key){
+		throw std::bad_alloc();
+	}
 }
 template<class T, class Key>
 Node<T, Key>::Node() :
@@ -583,7 +587,11 @@ class AVLTree {
 		if (!height) {
 			return NULL;
 		}
+
 		Node<T, Key>* node = new Node<T, Key>();
+		if(!node){
+			throw std::bad_alloc();
+		}
 		node->setFather(father);
 		node->setheight(height - 1);
 		node->setRightSon(fillTreeWithBlankNodes(height - 1, node));
@@ -642,6 +650,9 @@ AVLTree<T, Key, CompareKey>::~AVLTree() {
 template<class T, class Key, class CompareKey>
 void AVLTree<T, Key, CompareKey>::addVertices(T* value, Key* key) {
 	Node<T, Key>* newNode = new Node<T, Key>(value, key);
+	if(!newNode){
+		throw std::bad_alloc();
+	}
 	if (!root) {
 		root = newNode;
 		this->numOfVertices++;
