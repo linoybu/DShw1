@@ -464,11 +464,6 @@ class AVLTree {
 		//** the height is swapping as well, and the remove from one son fix the height
 		this->swapVartics(delNode, minLergerThenDelNode);
 
-		//***delete TODO
-//		print1 p1 = print1();
-//		cout << "inOrder:" << endl;
-//		this->inOrder(p1);
-		///****
 		if(!delNode->getLeftSon()&&!delNode->getRightSon()){
 			removeIfNoSons(delNode);
 		}else{
@@ -614,7 +609,22 @@ public:
 	int getNumOfVertices();
 	void addVertices(T* value, Key* key);
 	void arrToAvlTree(int arrSize, pair<T, Key>* arr);
+
+
+	//****TODO deltet it
+	template<class inScanFunc>
+	void NodeInOrder(inScanFunc scan);
 };
+
+///*****TODO for test delete it!!
+template<class T, class Key, class CompareKey>
+template<class inScanFunc>
+void AVLTree<T, Key, CompareKey>::NodeInOrder(inScanFunc scan){
+	this->NodeinOrderRec(scan,this->root);
+
+}
+
+///****
 
 ///***** functions Realizations
 //* constructor and destructor

@@ -12,6 +12,33 @@ using std::cout;
 using std::endl;
 
 
+class fatherMatchSon {
+public:
+	bool IsTrue;
+	fatherMatchSon() {
+		this->IsTrue = true;
+	}
+	;
+	void operator()(Node<int, int>* ptr) {
+		if (ptr->getLeftSon() == NULL && ptr->getRightSon() != NULL) {
+			this->IsTrue = (this->IsTrue
+					&& (ptr->getRightSon()->getFather() == ptr));
+			return;
+		}
+
+		if (ptr->getLeftSon() != NULL && ptr->getRightSon() == NULL) {
+			this->IsTrue = (this->IsTrue
+					&& (ptr->getLeftSon()->getFather() == ptr));
+			return;
+		}
+		if (ptr->getLeftSon() != NULL && ptr->getRightSon() != NULL) {
+			return;
+		}
+		this->IsTrue = (this->IsTrue && (ptr->getLeftSon()->getFather() == ptr)
+				&& (ptr->getRightSon()->getFather() == ptr));
+
+	}
+};
 
 class print
 {
@@ -47,6 +74,7 @@ public:
 
 void fromArr(){
 	int a=1,b=2,c=3,d=4,e=5,f=6,h=7,i=8,j=9,l=10;
+	fatherMatchSon fatherSon = fatherMatchSon();
 	pair<int,int> a1 = pair<int,int>(a,a);
 	pair<int,int> b1 = pair<int,int>(b,b);
 	pair<int,int> c1 = pair<int,int>(c,c);
@@ -64,23 +92,36 @@ void fromArr(){
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 
 }
 
 bool toArr() {
 AVLTree<int,int,CompareInt> T= AVLTree<int,int,CompareInt>();
+fatherMatchSon fatherSon = fatherMatchSon();
 int a=1,b=2,c=3,d=4,e=5,f=6,h=7,i=8,j=9,l=10;
 T.addVertices(&a,&a);
 T.addVertices(&b,&b);
 T.addVertices(&c,&c);
 T.addVertices(&d,&d);
 T.addVertices(&d,&d); //** check double
+T.NodeInOrder(fatherSon);
+cout << "IsAllTheSonsBelongToThierFater:"
+		<<  fatherSon.IsTrue << endl;
 T.addVertices(&e,&e);
 T.addVertices(&f,&f);
 T.addVertices(&h,&h);
 T.addVertices(&i,&i);
+T.NodeInOrder(fatherSon);
+cout << "IsAllTheSonsBelongToThierFater:"
+		<<  fatherSon.IsTrue << endl;
 T.addVertices(&j,&j);
 T.addVertices(&l,&l);
+T.NodeInOrder(fatherSon);
+cout << "IsAllTheSonsBelongToThierFater:"
+		<<  fatherSon.IsTrue << endl;
 
 BiggerFromInt function =BiggerFromInt(3);
 cout <<"bigger then 3:"<<endl;
@@ -206,62 +247,94 @@ delete[] arr;
 
 bool AvlTest(){
 	int a=5,b=6,c=4,d=10,e=20,f=25,g=7,h=9;
+	fatherMatchSon fatherSon = fatherMatchSon();
 	AVLTree<int,int,CompareInt> tree= AVLTree<int,int,CompareInt>();
 	tree.addVertices(&a,&a);
 	tree.addVertices(&b,&b);
 	tree.addVertices(&c,&c);
 	tree.addVertices(&d,&d);
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	tree.addVertices(&e,&e);
 	tree.addVertices(&f,&f);
 	tree.addVertices(&g,&g);
 	tree.addVertices(&h,&h);
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
+
 	print p1 =print();
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	int* a1 = tree.deleteVertice(d);//10
 	ASSERT_EQUALS(10, *a1);
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(g);//7
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	ASSERT_EQUALS(7, *a1);
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(a);//5
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	ASSERT_EQUALS(5, *a1);
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(b);//6
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	ASSERT_EQUALS(6, *a1);
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(c);//4
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	cout <<"inOrder:"<<endl;
 	ASSERT_EQUALS(4, *a1);
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(e);//20
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	cout <<"inOrder:"<<endl;
 	ASSERT_EQUALS(20, *a1);
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(f);//25
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	ASSERT_EQUALS(25, *a1);
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
 	cout <<endl;
 	delete a1;
 	a1 =tree.deleteVertice(h);//9
+	tree.NodeInOrder(fatherSon);
+	cout << "IsAllTheSonsBelongToThierFater:"
+			<<  fatherSon.IsTrue << endl;
 	ASSERT_EQUALS(9, *a1);
 	cout <<"inOrder:"<<endl;
 	tree.inOrder(p1);
