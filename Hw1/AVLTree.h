@@ -707,6 +707,9 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 
 template<class T, class Key, class CompareKey>
 T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
+	if(!root){
+		return NULL;
+	}
 	CompareKey compareFunc = CompareKey();
 	Node<T, Key>* delNode = this->deleteVerticeReq(this->root, key,
 			compareFunc);
