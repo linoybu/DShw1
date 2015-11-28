@@ -687,6 +687,9 @@ public:
 
 		if (f(key, value)) {
 			pairArr[this->i] = new pair<T, Key>(key, value);
+			if(!pairArr[this->i]){
+				throw std::bad_alloc();
+			}
 			this->i++;
 		}
 	}
@@ -739,6 +742,9 @@ T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
 	}
 	this->numOfVertices--;
 	T* val = new T(*(delNode->getValue()));
+	if(!val){
+		throw std::bad_alloc();
+	}
 	delete delNode;
 	return val;
 }
@@ -821,7 +827,6 @@ public:
 		arrSize--;
 	}
 };
-//TODO
 
 template<class T, class Key, class CompareKey>
 void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>* arr) {

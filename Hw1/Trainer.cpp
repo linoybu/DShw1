@@ -12,7 +12,10 @@
 
 Trainer::Trainer(int id) :
 		id(id), bestPokimon(NULL), pokimonTree(
-				*new AVLTree<Pokimon, pair<int, int>, CompareKeysForTrainerTree>()) {
+				new AVLTree<Pokimon, pair<int, int>, CompareKeysForTrainerTree>()) {
+	if (!pokimonTree) {
+		throw std::bad_alloc();
+	}
 	if (id <= 0) {
 		throw InvaildInput();
 	}
@@ -42,7 +45,7 @@ Pokimon* Trainer::getBestPokimon() {
 void Trainer::addPokimon(Pokimon& pokimon) {
 	int id = pokimon.getId(), level = pokimon.getLevel();
 	pair<int, int> key = pair<int, int>(level, id);
-	(this->pokimonTree).addVertices(&pokimon, &key);
+	(this->pokimonTree)->addVertices(&pokimon, &key);
 
 //if this is the first pokimon we add
 	if (this->bestPokimon == NULL) {
@@ -69,7 +72,7 @@ void Trainer::removePokimon(pair<int, int>& key) {
 	CompareKeysForTrainerTree compare = CompareKeysForTrainerTree();
 
 	//delete pokimon:
-	(this->pokimonTree).deleteVertice(key);
+	(this->pokimonTree)->deleteVertice(key);
 
 	//check if we will removed the "bestPokimon"
 	try {
@@ -80,13 +83,12 @@ void Trainer::removePokimon(pair<int, int>& key) {
 		this->setBestPokimon(NULL);
 	}
 
-
 }
 
 Pokimon* Trainer::findBestPokimon() {
-	return (&((this->pokimonTree).getMax()));
+	return (&((this->pokimonTree)->getMax()));
 }
 
 int Trainer::getNumberOfPokimons() {
-	return ((this->pokimonTree).getNumOfVertices());
+	return ((this->pokimonTree)->getNumOfVertices());
 }

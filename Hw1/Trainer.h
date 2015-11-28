@@ -28,7 +28,7 @@ class Trainer {
 	int id;
 	Pokimon* bestPokimon;
 	// the keys at the trainer's pokimons tree are pairs of (level,id)
-	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree> pokimonTree ;
+	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree>* pokimonTree ;
 
 public:
 	Trainer(int id);
@@ -42,5 +42,6 @@ public:
 	void removePokimon(pair<int,int>& key);
 	Pokimon* findBestPokimon ();
 	int getNumberOfPokimons();
+	Pokimon* findPokimon(int id,int level); //TODO
 
 };
