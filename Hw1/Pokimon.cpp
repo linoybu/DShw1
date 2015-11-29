@@ -19,6 +19,11 @@ Pokimon::Pokimon(const Pokimon& pokimon) :
 
 }
 
+std::ostream& operator<<(std::ostream& os, const Pokimon& pokimon){
+	os<< "level: "<<pokimon.level<<" id: "<<pokimon.id;
+	return os;
+}
+
 void Pokimon::operator=(const Pokimon& pokimon) {
 	this->id = pokimon.id;
 	this->level = pokimon.level;

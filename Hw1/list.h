@@ -67,8 +67,8 @@ public:
 	bool operator!=(const Iterator<T>& Iterator) const;
 
 	//operators we don't use:
-	T& operator[](T) = delete;
-	const T& operator[](T) const = delete;
+//	T& operator[](T) = delete;
+//	const T& operator[](T) const = delete;
 
 	template<class D> friend class List;
 };

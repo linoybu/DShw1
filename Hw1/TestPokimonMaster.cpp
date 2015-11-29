@@ -1,5 +1,5 @@
 /*
- * TestPokimonMaster.cpp
+ * TestpokimonMaster.cpp
  *
  *  Created on: Nov 29, 2015
  *      Author: linoy
@@ -50,18 +50,34 @@ using std::endl;
 //};
 
 bool testPokimonMaster(){
-	PokimonMaster pokimonMaster =  PokimonMaster();
+	PokimonMaster pokimonMaster =   PokimonMaster();
 	pokimonMaster.addTrainer(1);
 	pokimonMaster.CatchPokemon(1,1,2);
 	pokimonMaster.CatchPokemon(2,1,2);
 	pokimonMaster.CatchPokemon(3,1,2);
 	pokimonMaster.CatchPokemon(4,1,2);
 	pokimonMaster.CatchPokemon(6,1,2);
+	pokimonMaster.EvolvePokemon(3,5);
 	pokimonMaster.FreePokemon(1);
 	pokimonMaster.FreePokemon(2);
-	pokimonMaster.FreePokemon(3);
 	pokimonMaster.FreePokemon(4);
 	pokimonMaster.FreePokemon(6);
+	//pokimonMaster.FreePokemon(5);
+	try{
+		pokimonMaster.FreePokemon(3);
+	}
+	catch(Failure& fail){
+		int a =5;
+		a=a+1;
+		//delete pokimonMaster;
+	}
+//	catch(EmptyTree& fail){
+//		int a =5;
+//		a=a+1;
+//	}
+
+	int b = 5;
+	b=b+1;
 	return true;
 
 }

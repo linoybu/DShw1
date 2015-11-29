@@ -165,3 +165,22 @@ void PokimonMaster::Quit(){
 
 }
 
+
+void PokimonMaster::printAllTrees(){
+		fatherMatchSon1 fatherSon = fatherMatchSon1();
+		fatherMatchSon2 fatherSon2 = fatherMatchSon2();
+		print p1 =print();
+		print2 p2 =print2();
+		cout <<"idTree:"<<endl;
+		this->idPokimonTree->inOrder(p1);
+		cout <<endl;
+		this-> idPokimonTree->NodeInOrder(fatherSon);
+		cout <<" fatherSonCheck: "<<fatherSon.IsTrue<<endl;
+		cout <<"levelTree:"<<endl;
+		this->levelPokimonTree->inOrder(p2);
+		cout <<endl;
+		this-> levelPokimonTree->NodeInOrder(fatherSon2);
+		cout <<" fatherSonCheck: "<<fatherSon2.IsTrue<<endl;
+
+}
+

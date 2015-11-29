@@ -9,6 +9,7 @@
 #define POKIMON_H_
 #include "exception.h"
 #include "pair.h"
+#include <iostream>
 
 class Pokimon {
 	int id;
@@ -27,7 +28,10 @@ public:
 	int const getLevel() const;
 	void setTrainerId(int id);
 	int getTrainerId();
+	friend std::ostream& operator<<(std::ostream& os, const Pokimon& pokimon);
 };
+
+
 
 // key = level value = id
 class compareByLevel {

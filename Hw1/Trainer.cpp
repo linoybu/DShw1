@@ -31,9 +31,6 @@ bool Trainer::operator==(const Trainer& trainer) {
 }
 Trainer::~Trainer() {
 	delete pokimonTree;
-	if(bestPokimon){
-		delete bestPokimon;
-	}
 	// Default detractor
 }
 
