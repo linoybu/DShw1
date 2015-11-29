@@ -651,7 +651,7 @@ void AVLTree<T, Key, CompareKey>::addVertices(T* value, Key* key) {
 	bool verticesAdd = this->addVerticeRec(this->root, *key, newNode);
 	if(!verticesAdd){
 		delete newNode;
-		return;
+		throw Failure();
 	}
 	this->numOfVertices++;
 
@@ -726,7 +726,7 @@ T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
 	Node<T, Key>* delNode = this->deleteVerticeReq(this->root, key,
 			compareFunc);
 	if (compareFunc(*(delNode->getKey()), key) != 0) {
-		return NULL;
+		throw Failure();
 	}
 	this->numOfVertices--;
 	T* val = new T(*(delNode->getValue()));

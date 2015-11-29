@@ -40,12 +40,13 @@ Pokimon* Trainer::getBestPokimon() {
 
 }
 void Trainer::addPokimon(Pokimon& pokimon) {
-	int id = pokimon.getId(), level = pokimon.getLevel();
+	int id = pokimon.getId();
+	int level = pokimon.getLevel();
 	pair<int, int> key = pair<int, int>(level, id);
 	(this->pokimonTree)->addVertices(&pokimon, &key);
 
 //if this is the first pokimon we add
-	if (this->bestPokimon == NULL) {
+	if (!bestPokimon) {
 		this->bestPokimon = &pokimon;
 	} else {
 

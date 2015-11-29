@@ -47,17 +47,23 @@ public:
 	void PokimonMaster::addPokimonInIdTree(Pokimon& pokimon){
 		int id = pokimon.getId();
 		this->idPokimonTree.addVertices(&pokimon,&id);
+		this->bestPokimon = &(idPokimonTree.getMax());
 	}
 	void PokimonMaster::addPokimonInLevelTree(Pokimon& pokimon){
 		int id = pokimon.getId();
 		int level = pokimon.getLevel();
 		pair<int,int> key = pair<int,int>(id,level);
 		this->levelPokimonTree.addVertices(&pokimon,&key);
+		this->bestPokimon = &(levelPokimonTree.getMax());
 
 	}
 
-PokimonMaster::PokimonMaster() {
-	// TODO Auto-generated constructor stub
+PokimonMaster::PokimonMaster():
+		trainerList(std::list<Trainer>()),
+		idPokimonTree(AVLTree<Pokimon,int,compareByID>()),
+		levelPokimonTree(AVLTree<Pokimon,pair<int,int>,compareByLevel>()),
+		bestPokimon(NULL)
+{
 
 }
 
@@ -68,6 +74,9 @@ PokimonMaster::~PokimonMaster() {
 }
 
 void PokimonMaster::addTrainer(int id){
+	if(id<0){
+		throw InvaildInput();
+	}
 	if(this->findTrainer(id)){
 		throw Failure();
 	}
@@ -79,13 +88,25 @@ void PokimonMaster::addTrainer(int id){
 //	 *                FAILURE - If trainerID is already in the DS.
 //	 *                SUCCESS - Otherwise.
 void PokimonMaster::CatchPokemon(int pokemonID, int trainerID, int level){
+	if(trainerID<=0||pokemonID<=0||level<=0){
+		throw InvaildInput();
+	}
 	Pokimon pokimon = Pokimon(pokemonID,level,trainerID);
 	Trainer* trainer = findTrainer(trainerID);
+	if(!trainer){
+		throw Failure();
+	}
 	trainer->addPokimon(pokimon);
 	addPokimonInIdTree(pokimon);
 	addPokimonInLevelTree(pokimon);
+	if(!bestPokimon){
+		bestPokimon = new Pokimon(pokimon);
+	}
 }
 void PokimonMaster::FreePokemon(int pokemonID){
+	if(pokemonID<=0){
+		throw InvaildInput();
+	}
 	Pokimon* pokimon = this->idPokimonTree.deleteVertice(pokemonID);
 	int id = pokimon->getId();
 	int level = pokimon->getLevel();
@@ -102,6 +123,9 @@ void PokimonMaster::LevelUp(int pokemonID, int levelIncrease){
 
 }
 void PokimonMaster::EvolvePokemon(int pokemonID, int evolvedID){
+	if(pokemonID<=0||evolvedID<=0){
+		throw InvaildInput();
+	}
 	Pokimon* pokimon = this->idPokimonTree.deleteVertice(pokemonID);
 	int id = pokimon->getId();
 	int level = pokimon->getLevel();
@@ -116,6 +140,8 @@ void PokimonMaster::EvolvePokemon(int pokemonID, int evolvedID){
 	this->addPokimonInIdTree(pokimonToAdd);
 	this->addPokimonInLevelTree(pokimonToAdd);
 	trainer->addPokimon(pokimonToAdd);
+
+
 }
 
 void PokimonMaster::GetTopPokemon(int trainerID, int *pokemonID){
