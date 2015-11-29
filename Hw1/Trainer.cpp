@@ -18,11 +18,22 @@ Trainer::Trainer(int id) :
 	}
 }
 
+Trainer::Trainer(const Trainer& trainer) :
+		id(trainer.id), bestPokimon(trainer.bestPokimon),
+		pokimonTree(new AVLTree<Pokimon,pair<int,int>,CompareKeysForTrainerTree>(*(trainer.pokimonTree)))
+		{
+		}
+
+
 bool Trainer::operator==(const Trainer& trainer) {
 	return (this->id == trainer.id);
 
 }
 Trainer::~Trainer() {
+	delete pokimonTree;
+	if(bestPokimon){
+		delete bestPokimon;
+	}
 	// Default detractor
 }
 
@@ -44,49 +55,24 @@ void Trainer::addPokimon(Pokimon& pokimon) {
 	int level = pokimon.getLevel();
 	pair<int, int> key = pair<int, int>(level, id);
 	(this->pokimonTree)->addVertices(&pokimon, &key);
-
-//if this is the first pokimon we add
-	if (!bestPokimon) {
-		this->bestPokimon = &pokimon;
-	} else {
-
-		//check if we added better pokimon then "bestPokimon"
-		int idBest = this->bestPokimon->getId(), levelBest =
-				this->bestPokimon->getLevel();
-		pair<int, int> keyBest = pair<int, int>(levelBest, idBest);
-		CompareKeysForTrainerTree compare = CompareKeysForTrainerTree();
-		if (compare(key, keyBest) > 0) {
-			this->setBestPokimon(&pokimon);
-		}
-	}
+	bestPokimon = &this->pokimonTree->getMax();
 
 }
 void Trainer::removePokimon(pair<int, int>& key) {
 
-	//prepare data to check if we will removed the "bestPokimon"
-	int idBest = this->bestPokimon->getId(), levelBest =
-			this->bestPokimon->getLevel();
-	pair<int, int> keyBest = pair<int, int>(levelBest, idBest);
-	CompareKeysForTrainerTree compare = CompareKeysForTrainerTree();
 
-	//delete pokimon:
 	Pokimon* pokimon = (this->pokimonTree)->deleteVertice(key);
 	delete pokimon;
-
-	//check if we will removed the "bestPokimon"
-	try {
-		if (compare(key, keyBest) == 0) {
-			this->setBestPokimon(this->findBestPokimon());
-		}
+	try{
+	bestPokimon = &pokimonTree->getMax(); //using = operator
 	} catch (EmptyTree& e) {
-		this->setBestPokimon(NULL);
+			this->setBestPokimon(NULL);
 	}
 
+
 }
 
-Pokimon* Trainer::findBestPokimon() {
-	return (&((this->pokimonTree)->getMax()));
-}
+
 
 int Trainer::getNumberOfPokimons() {
 	return ((this->pokimonTree)->getNumOfVertices());

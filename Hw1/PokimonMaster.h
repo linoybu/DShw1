@@ -15,13 +15,13 @@
 using std::cout;
 using std::endl;
 #include <stdlib.h>
-#include <list>
+#include "list.h"
 
 
 class PokimonMaster {
-	std::list<Trainer> trainerList;
-	AVLTree<Pokimon,int,compareByID> idPokimonTree;
-	AVLTree<Pokimon,pair<int,int>,compareByLevel> levelPokimonTree;
+	List<Trainer> trainerList;
+	AVLTree<Pokimon,int,compareByID>* idPokimonTree;
+	AVLTree<Pokimon,pair<int,int>,compareByLevel>* levelPokimonTree;
 	Pokimon* bestPokimon;
 
 	Trainer* findTrainer(int id); //TODO -LINOY
@@ -32,17 +32,18 @@ class PokimonMaster {
 
 
 public:
-	PokimonMaster(); //TODO -LIOR
-	virtual ~PokimonMaster();//TODO -LINOY
-	void addTrainer(int id);//TODO -LINOY
+	PokimonMaster();
+//	PokimonMaster(PokimonMaster& pmaster);
+	virtual ~PokimonMaster();
+	void addTrainer(int id);
 	//ALLOCATION_ERROR - In case of an allocation error.
 //	 *                INVALID_INPUT - If DS==NULL or if trainerID <= 0.
 //	 *                FAILURE - If trainerID is already in the DS.
 //	 *                SUCCESS - Otherwise.
-	void CatchPokemon(int pokemonID, int trainerID, int level);//TODO -LIOR
-	void FreePokemon(int pokemonID);//TODO -LINOY
+	void CatchPokemon(int pokemonID, int trainerID, int level);
+	void FreePokemon(int pokemonID);
 	void LevelUp(int pokemonID, int levelIncrease);//TODO -LIOR
-	void EvolvePokemon( int pokemonID, int evolvedID);//TODO -LINOY
+	void EvolvePokemon( int pokemonID, int evolvedID);
 	void GetTopPokemon(int trainerID, int *pokemonID);//TODO -LIOR
 	void GetAllPokemonsByLevel(int trainerID, int **pokemons, int *numOfPokemon);//TODO -LIOR
 	void UpdateLevels(int stoneCode, int stoneFactor);//TODO - to be or not to be:)

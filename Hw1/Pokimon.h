@@ -29,13 +29,14 @@ public:
 	int getTrainerId();
 };
 
+// key = level value = id
 class compareByLevel {
 public:
 	int operator()(pair<int, int> firstPok, pair<int, int> secPok) {
 		if (firstPok.getKey() != secPok.getKey()) {
 			return (firstPok.getKey() - secPok.getKey());
 		}
-		return (firstPok.getValue() - secPok.getValue());
+		return (secPok.getValue() - firstPok.getValue());
 	}
 
 };

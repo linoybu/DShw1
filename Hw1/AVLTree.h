@@ -595,6 +595,7 @@ class AVLTree {
 
 public:
 	AVLTree();
+	AVLTree(const AVLTree<T,Key,CompareKey>&);
 	~AVLTree();
 	T& find(Key& key);
 	T* deleteVertice(Key& key);
@@ -633,6 +634,12 @@ template<class T, class Key, class CompareKey>
 AVLTree<T, Key, CompareKey>::AVLTree() :
 		root(NULL), numOfVertices(0) {
 }
+
+template<class T, class Key, class CompareKey>
+AVLTree<T, Key, CompareKey>::AVLTree(const AVLTree<T,Key,CompareKey>& tree) :
+		root(tree.root), numOfVertices(tree.numOfVertices) {
+}
+
 
 template<class T, class Key, class CompareKey>
 AVLTree<T, Key, CompareKey>::~AVLTree() {
@@ -713,19 +720,18 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 	if (compFunc(*(ptr->getKey()), key) != 0) {
 		throw NotINTheTree();
 	}
-	T* returnValue = new T(*(ptr->getValue()));
-	return *returnValue;
+	return *(ptr->getValue());
 }
 
 template<class T, class Key, class CompareKey>
 T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
 	if(!root){
-		return NULL;
+		throw EmptyTree();
 	}
 	CompareKey compareFunc = CompareKey();
 	Node<T, Key>* delNode = this->deleteVerticeReq(this->root, key,
 			compareFunc);
-	if (compareFunc(*(delNode->getKey()), key) != 0) {
+	if (!delNode||compareFunc(*(delNode->getKey()), key) != 0) {
 		throw Failure();
 	}
 	this->numOfVertices--;

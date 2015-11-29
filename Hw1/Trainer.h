@@ -11,6 +11,8 @@
 #include "exception.h"
 #include <stdlib.h>
 
+///***TODO do we need this class? we have this function on pokimon
+//** key = level value =ID
 class CompareKeysForTrainerTree {
 public:
 	int operator()(pair<int,int>& key1, pair<int,int>& key2) {
@@ -18,8 +20,8 @@ public:
 		if(key1.getKey()!=key2.getKey()){
 			return (key1.getKey()-key2.getKey());
 		}// if the levels are equals we compare by id
-			return (key2.getValue()-key1.getValue());
-			// smallest id is bigger key therefore we return key2-key1
+	return (key2.getValue()-key1.getValue());
+	// smallest id is bigger key therefore we return key2-key1
 	}
 };
 
@@ -32,7 +34,7 @@ class Trainer {
 
 public:
 	Trainer(int id);
-	//Trainer(const Trainer& triner)= delete;- we don't want to copy trainer
+	Trainer(const Trainer& );//- we don't want to copy trainer
 	bool operator==(const Trainer& trainer);
 	virtual ~Trainer();
 	int const getId() const;
@@ -40,7 +42,6 @@ public:
 	Pokimon* getBestPokimon();
 	void addPokimon(Pokimon& pokimon);
 	void removePokimon(pair<int,int>& key);
-	Pokimon* findBestPokimon ();
 	int getNumberOfPokimons();
 	Pokimon* findPokimon(int id,int level); //TODO
 

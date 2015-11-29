@@ -1,17 +1,17 @@
-/*
- * main.cpp
- *
- *  Created on: Nov 16, 2015
- *      Author: linoy
- */
-#include "Pokimon.h"
-#include "mtmtest.h"
-#include "AVLTree.h"
-#include "pair.h"
-using std::cout;
-using std::endl;
-
-
+///*
+// * main.cpp
+// *
+// *  Created on: Nov 16, 2015
+// *      Author: linoy
+// */
+//#include "Pokimon.h"
+//#include "mtmtest.h"
+//#include "AVLTree.h"
+//#include "pair.h"
+//using std::cout;
+//using std::endl;
+//
+//
 //class fatherMatchSon {
 //public:
 //	bool IsTrue;
@@ -48,7 +48,7 @@ using std::endl;
 //		cout <<value << ",";
 //	}
 //};
-
+//
 //class CompareInt
 //{
 //public:
@@ -353,4 +353,4 @@ using std::endl;
 //	//fromArr();
 //
 //}
-
+//
