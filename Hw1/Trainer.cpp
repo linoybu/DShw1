@@ -13,9 +13,6 @@
 Trainer::Trainer(int id) :
 		id(id), bestPokimon(NULL), pokimonTree(
 				new AVLTree<Pokimon, pair<int, int>, CompareKeysForTrainerTree>()) {
-	if (!pokimonTree) {
-		throw std::bad_alloc();
-	}
 	if (id <= 0) {
 		throw InvaildInput();
 	}
@@ -72,7 +69,8 @@ void Trainer::removePokimon(pair<int, int>& key) {
 	CompareKeysForTrainerTree compare = CompareKeysForTrainerTree();
 
 	//delete pokimon:
-	(this->pokimonTree)->deleteVertice(key);
+	Pokimon* pokimon = (this->pokimonTree)->deleteVertice(key);
+	delete pokimon;
 
 	//check if we will removed the "bestPokimon"
 	try {

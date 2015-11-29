@@ -8,12 +8,14 @@
 #ifndef POKIMON_H_
 #define POKIMON_H_
 #include "exception.h"
+#include "pair.h"
 
 class Pokimon {
 	int id;
 	int level;
+	int trainerId;
 public:
-	Pokimon(int id,int level);
+	Pokimon(int id, int level,int trainerId);
 	Pokimon(const Pokimon& pokimon);
 	void operator=(const Pokimon& pokimon);
 	virtual ~Pokimon();
@@ -23,29 +25,29 @@ public:
 	void setLevel(int level);
 	int getLevel();
 	int const getLevel() const;
+	void setTrainerId(int id);
+	int getTrainerId();
 };
 
-class compareByLevel{
-	bool operator()(const Pokimon &firstPok,const Pokimon &secPok)
-	{
-		if(firstPok.getLevel()!=secPok.getLevel()){
-			return(firstPok.getLevel()>secPok.getLevel());
+class compareByLevel {
+public:
+	int operator()(pair<int, int> firstPok, pair<int, int> secPok) {
+		if (firstPok.getKey() != secPok.getKey()) {
+			return (firstPok.getKey() - secPok.getKey());
 		}
-		return (firstPok.getId()<secPok.getId());
+		return (firstPok.getValue() - secPok.getValue());
 	}
+
 };
 
 //** they say that the better id is the smallest one,but im not sure
 //** check later
-class compareByID{
-	bool operator()( Pokimon &firstPok, Pokimon &secPok)
-		{
-			return (firstPok.getId()<secPok.getId());
-		}
+class compareByID {
+public:
+	int operator()(int firstPok, int secPok) {
+		return (secPok - firstPok);
+	}
 
 };
-
-
-
 
 #endif /* POKIMON_H_ */

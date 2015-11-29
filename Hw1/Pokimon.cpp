@@ -7,15 +7,15 @@
 
 #include "Pokimon.h"
 
-Pokimon::Pokimon(int id, int level) :
-		id(id), level(level) {
+Pokimon::Pokimon(int id, int level,int trainerId) :
+		id(id), level(level),trainerId(trainerId) {
 	if (id <= 0 || level <= 0) {
 		throw InvaildInput();
 	}
 }
 
 Pokimon::Pokimon(const Pokimon& pokimon) :
-		id(pokimon.id), level(pokimon.level) {
+		id(pokimon.id), level(pokimon.level),trainerId(pokimon.trainerId) {
 
 }
 
@@ -56,5 +56,11 @@ int Pokimon:: getLevel() {
 }
 int const Pokimon:: getLevel()const {
 	return this->level;
+}
+void  Pokimon:: setTrainerId(int id) {
+	this->trainerId = id;
+}
+int  Pokimon:: getTrainerId() {
+	return this->trainerId;
 }
 

@@ -66,9 +66,6 @@ Node<T, Key>::Node(T* value, Key* key, Node<T, Key>* father,
 		Node<T, Key>* rightSon, Node<T, Key>* leftSon, int height) :
 		father(father), leftSon(leftSon), rightSon(rightSon), value(
 				new T(*value)), key(new Key(*key)), height(height) {
-	if(!value||!key){
-		throw std::bad_alloc();
-	}
 }
 template<class T, class Key>
 Node<T, Key>::Node() :
@@ -589,9 +586,6 @@ class AVLTree {
 		}
 
 		Node<T, Key>* node = new Node<T, Key>();
-		if(!node){
-			throw std::bad_alloc();
-		}
 		node->setFather(father);
 		node->setheight(height - 1);
 		node->setRightSon(fillTreeWithBlankNodes(height - 1, node));
@@ -602,7 +596,6 @@ class AVLTree {
 public:
 	AVLTree();
 	~AVLTree();
-	void addVertices(T& value, Key& key);
 	T& find(Key& key);
 	T* deleteVertice(Key& key);
 	template<class inScanFunc>
@@ -650,9 +643,6 @@ AVLTree<T, Key, CompareKey>::~AVLTree() {
 template<class T, class Key, class CompareKey>
 void AVLTree<T, Key, CompareKey>::addVertices(T* value, Key* key) {
 	Node<T, Key>* newNode = new Node<T, Key>(value, key);
-	if(!newNode){
-		throw std::bad_alloc();
-	}
 	if (!root) {
 		root = newNode;
 		this->numOfVertices++;
@@ -687,9 +677,6 @@ public:
 
 		if (f(key, value)) {
 			pairArr[this->i] = new pair<T, Key>(key, value);
-			if(!pairArr[this->i]){
-				throw std::bad_alloc();
-			}
 			this->i++;
 		}
 	}
@@ -726,7 +713,8 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 	if (compFunc(*(ptr->getKey()), key) != 0) {
 		throw NotINTheTree();
 	}
-	return *(ptr->getValue());
+	T* returnValue = new T(*(ptr->getValue()));
+	return *returnValue;
 }
 
 template<class T, class Key, class CompareKey>
@@ -742,9 +730,6 @@ T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
 	}
 	this->numOfVertices--;
 	T* val = new T(*(delNode->getValue()));
-	if(!val){
-		throw std::bad_alloc();
-	}
 	delete delNode;
 	return val;
 }
