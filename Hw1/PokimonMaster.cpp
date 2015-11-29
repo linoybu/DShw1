@@ -47,7 +47,7 @@ public:
 	void PokimonMaster::addPokimonInIdTree(Pokimon& pokimon){
 		int id = pokimon.getId();
 		this->idPokimonTree->addVertices(&pokimon,&id);
-		this->bestPokimon = &(idPokimonTree->getMax());
+	//	this->bestPokimon = &(idPokimonTree->getMax());
 	}
 	void PokimonMaster::addPokimonInLevelTree(Pokimon& pokimon){
 		int id = pokimon.getId();
@@ -191,4 +191,50 @@ void PokimonMaster::printAllTrees(){
 		}
 
 }
-
+//
+//void PokimonMaster::updateLevelHelper(AVLTree<Pokimon,pair<int,int>,compareByLevel >* tree){
+//	tree->toArr()
+//
+//
+//}
+//
+//class conditionForArr{
+//
+//
+//
+//};
+//
+//void merge(int a[], int m, int b[], int n, int sorted[]) {
+//  int i, j, k;
+//
+//  j = k = 0;
+//
+//  for (i = 0; i < m + n;) {
+//    if (j < m && k < n) {
+//      if (a[j] < b[k]) {
+//        sorted[i] = a[j];
+//        j++;
+//      }
+//      else {
+//        sorted[i] = b[k];
+//        k++;
+//      }
+//      i++;
+//    }
+//    else if (j == m) {
+//      for (; i < m + n;) {
+//        sorted[i] = b[k];
+//        k++;
+//        i++;
+//      }
+//    }
+//    else {
+//      for (; i < m + n;) {
+//        sorted[i] = a[j];
+//        j++;
+//        i++;
+//      }
+//    }
+//  }
+//}
+//

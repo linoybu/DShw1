@@ -465,9 +465,9 @@ class AVLTree {
 		//** the height is swapping as well, and the remove from one son fix the height
 		this->swapVartics(delNode, minLergerThenDelNode);
 
-		if(!delNode->getLeftSon()&&!delNode->getRightSon()){
+		if (!delNode->getLeftSon() && !delNode->getRightSon()) {
 			removeIfNoSons(delNode);
-		}else{
+		} else {
 			removeVarticIfOneSon(delNode);
 		}
 	}
@@ -541,7 +541,7 @@ class AVLTree {
 
 			//** if no left son but right son exist, add to the left
 			//ptr.key>key
-		} else if (!ptr->getLeftSon() && comparefunc(*ptr->getKey(),key)>0) {
+		} else if (!ptr->getLeftSon() && comparefunc(*ptr->getKey(), key) > 0) {
 			ptr->setLeftSon(nodeToInsert);
 			nodeToInsert->setFather(ptr);
 			//** Because we have right son no need to fix height
@@ -569,7 +569,7 @@ class AVLTree {
 			return vertAdd;
 			//**if we need to put it in the right
 		} else {
-			bool vertAdd =  addVerticeRec(ptr->getRightSon(), key, nodeToInsert);
+			bool vertAdd = addVerticeRec(ptr->getRightSon(), key, nodeToInsert);
 			//** before we add the new vertice the rightson.height = leftson.highet
 			//** or > in 1, or < in 1. if == after the change, it will be bigger
 			//** and we need to update, if > need to be update, and if <
@@ -595,7 +595,7 @@ class AVLTree {
 
 public:
 	AVLTree();
-	AVLTree(const AVLTree<T,Key,CompareKey>&);
+	AVLTree(const AVLTree<T, Key, CompareKey>&);
 	~AVLTree();
 	T& find(Key& key);
 	T* deleteVertice(Key& key);
@@ -621,8 +621,8 @@ public:
 ///*****TODO for test delete it!!
 template<class T, class Key, class CompareKey>
 template<class inScanFunc>
-void AVLTree<T, Key, CompareKey>::NodeInOrder(inScanFunc scan){
-	this->NodeinOrderRec(scan,this->root);
+void AVLTree<T, Key, CompareKey>::NodeInOrder(inScanFunc scan) {
+	this->NodeinOrderRec(scan, this->root);
 
 }
 
@@ -636,10 +636,9 @@ AVLTree<T, Key, CompareKey>::AVLTree() :
 }
 
 template<class T, class Key, class CompareKey>
-AVLTree<T, Key, CompareKey>::AVLTree(const AVLTree<T,Key,CompareKey>& tree) :
+AVLTree<T, Key, CompareKey>::AVLTree(const AVLTree<T, Key, CompareKey>& tree) :
 		root(tree.root), numOfVertices(tree.numOfVertices) {
 }
-
 
 template<class T, class Key, class CompareKey>
 AVLTree<T, Key, CompareKey>::~AVLTree() {
@@ -656,7 +655,7 @@ void AVLTree<T, Key, CompareKey>::addVertices(T* value, Key* key) {
 		return;
 	}
 	bool verticesAdd = this->addVerticeRec(this->root, *key, newNode);
-	if(!verticesAdd){
+	if (!verticesAdd) {
 		delete newNode;
 		throw Failure();
 	}
@@ -717,7 +716,7 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 	Node<T, Key>* ptr = this->root;
 	CompareKey compFunc = CompareKey();
 	ptr = findNodeReq(key, ptr, compFunc);
-	if (compFunc(*(ptr->getKey()), key) != 0) {
+	if ((!ptr)||compFunc(*(ptr->getKey()), key) != 0) {
 		throw NotINTheTree();
 	}
 	return *(ptr->getValue());
@@ -725,13 +724,13 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 
 template<class T, class Key, class CompareKey>
 T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
-	if(!root){
+	if (!root) {
 		throw EmptyTree();
 	}
 	CompareKey compareFunc = CompareKey();
 	Node<T, Key>* delNode = this->deleteVerticeReq(this->root, key,
 			compareFunc);
-	if (!delNode||compareFunc(*(delNode->getKey()), key) != 0) {
+	if (!delNode || compareFunc(*(delNode->getKey()), key) != 0) {
 		throw Failure();
 	}
 	this->numOfVertices--;
@@ -764,7 +763,7 @@ void AVLTree<T, Key, CompareKey>::postOrder(postScanFunc& scanfunc) {
 
 template<class T, class Key, class CompareKey>
 T& AVLTree<T, Key, CompareKey>::getMax() {
-	if(!root){
+	if (!root) {
 		throw EmptyTree();
 	}
 	Node<T, Key>* curNode = this->root;

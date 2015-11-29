@@ -66,7 +66,12 @@ void Trainer::removePokimon(pair<int, int>& key) {
 			this->setBestPokimon(NULL);
 	}
 
+}
 
+ Pokimon* Trainer::findPokimon(int id,int level){
+ pair<int,int> key =pair<int,int>(level,id);
+ return &(this->pokimonTree->find(key));
+ //if the pokimon not in the tree we throw exception "NotINTheTree"
 }
 
 

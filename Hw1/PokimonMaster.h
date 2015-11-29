@@ -23,11 +23,12 @@ class PokimonMaster {
 	AVLTree<Pokimon, pair<int, int>, compareByLevel>* levelPokimonTree;
 	Pokimon* bestPokimon;
 
-	Trainer* findTrainer(int id); //TODO -LINOY
-	Pokimon& findPokimonInIdTree(int id); //TODO -LIOR
-	Pokimon& findPokimonInLevelTree(int id); //TODO -LINOY
-	void addPokimonInIdTree(Pokimon& pokimon); //TODO -LIOR
-	void addPokimonInLevelTree(Pokimon& pokimon); //TODO -LINOY
+	Trainer* findTrainer(int id);
+	Pokimon& findPokimonInIdTree(int id);
+	Pokimon& findPokimonInLevelTree(int id);
+	void addPokimonInIdTree(Pokimon& pokimon);
+	void addPokimonInLevelTree(Pokimon& pokimon);
+//	void updateLevelHelper(AVLTree<Pokimon,pair<int,int>,compareByLevel >* tree);
 
 public:
 	PokimonMaster();
