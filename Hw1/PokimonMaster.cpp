@@ -6,7 +6,6 @@
  */
 
 #include "PokimonMaster.h"
-#include <algorithm>
 class IsTrainer{
 	int key;
 public:
