@@ -58,6 +58,7 @@ bool testPokimonMaster(){
 	pokimonMaster.CatchPokemon(4,1,2);
 	pokimonMaster.CatchPokemon(6,1,2);
 	pokimonMaster.EvolvePokemon(3,5);
+	pokimonMaster.printAllTrees();
 	pokimonMaster.FreePokemon(1);
 	pokimonMaster.FreePokemon(2);
 	pokimonMaster.FreePokemon(4);

@@ -85,6 +85,9 @@ public:
 		this->IsTrue = true;
 	}
 	void operator()(Node<Pokimon,pair<int,int> >* ptr) {
+		if(ptr->getheight()>=2){
+			this->IsTrue = false;
+		}
 		if (ptr->getLeftSon() == NULL && ptr->getRightSon() != NULL) {
 			this->IsTrue = (this->IsTrue
 					&& (ptr->getRightSon()->getFather() == ptr));

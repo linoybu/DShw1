@@ -181,6 +181,14 @@ void PokimonMaster::printAllTrees(){
 		cout <<endl;
 		this-> levelPokimonTree->NodeInOrder(fatherSon2);
 		cout <<" fatherSonCheck: "<<fatherSon2.IsTrue<<endl;
+		Iterator<Trainer> it = trainerList.begin();
+		for(it; it!=trainerList.end();++it){
+			cout <<" trainer: "<<(*it).getId()<<" "<<endl;
+			((*it).gettree())->inOrder(p2);
+			cout <<endl;
+			(*it).gettree()->NodeInOrder(fatherSon2);
+			cout <<" fatherSonCheck: "<<fatherSon2.IsTrue<<endl;
+		}
 
 }
 

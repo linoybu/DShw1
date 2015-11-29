@@ -44,5 +44,9 @@ public:
 	void removePokimon(pair<int,int>& key);
 	int getNumberOfPokimons();
 	Pokimon* findPokimon(int id,int level); //TODO
+	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree>*  gettree(){
+		return pokimonTree;
+	}
+
 
 };
