@@ -35,6 +35,7 @@ template<class T, class Key>
 pair<T, Key>::~pair() {
 	// Default detractor
 
+
 }
 
 template<class T, class Key>

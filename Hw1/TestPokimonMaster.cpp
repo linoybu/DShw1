@@ -212,33 +212,99 @@ bool testGetAllPokemonsByLevel() {
 	pokimonMaster.addTrainer(3);
 	pokimonMaster.CatchPokemon(11, 3, 8);
 
-	int** arr1;
+	int* arr1;
 	int numberOfPokimons;
-	pokimonMaster.GetAllPokemonsByLevel(1, arr1, &numberOfPokimons);
+	pokimonMaster.GetAllPokemonsByLevel(1, &(arr1), &numberOfPokimons);
 	for (int i = 0; i < numberOfPokimons; i++) {
-		cout << *(arr1[i]) << endl;
+		cout << (arr1[i]);
+	}
+	cout << endl;
+	free(arr1);
+
+	pokimonMaster.GetAllPokemonsByLevel(2, &(arr1), &numberOfPokimons);
+	for (int i = 0; i < numberOfPokimons; i++) {
+		cout << (arr1[i]);
+	}
+	cout << endl;
+	free(arr1);
+	pokimonMaster.GetAllPokemonsByLevel(3, &(arr1), &numberOfPokimons);
+	for (int i = 0; i < numberOfPokimons; i++) {
+		cout << (arr1[i]);
+	}
+	cout << endl;
+	free(arr1);
+	pokimonMaster.GetAllPokemonsByLevel(-1, &(arr1), &numberOfPokimons);
+	for (int i = 0; i < numberOfPokimons; i++) {
+		cout << (arr1[i]);
+	}
+	cout << endl;
+	free(arr1);
+	try {
+		pokimonMaster.GetAllPokemonsByLevel(47, &(arr1), &numberOfPokimons);
+	} catch (Failure& e) {
+		cout << "Failure" << endl;
+	}
+	try {
+		pokimonMaster.GetAllPokemonsByLevel(1, NULL, &numberOfPokimons);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.GetAllPokemonsByLevel(1, &(arr1), NULL);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.GetAllPokemonsByLevel(0, &(arr1), &numberOfPokimons);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.LevelUp(-1,7);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.LevelUp(3,-1);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.LevelUp(37,7);
+	} catch (Failure& e) {
+		cout << "failure" << endl;
+	}
+	int a =0;
+	pokimonMaster.GetTopPokemon(2,&a);
+	cout<<" "<<(a==10)<<" "<<endl;
+
+	a =0;
+	pokimonMaster.GetTopPokemon(-1,&a);
+	cout<<" "<<(a==10)<<" "<<endl;
+
+	try {
+		pokimonMaster.GetTopPokemon(0,&a);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
 	}
 
-//	pokimonMaster.GetAllPokemonsByLevel(2, arr1, &numberOfPokimons);
-//	for (int i = 0; i < numberOfPokimons; i++) {
-//		cout << *arr1[i] << endl;
-//	}
-//
-//	pokimonMaster.GetAllPokemonsByLevel(3, arr1, &numberOfPokimons);
-//	for (int i = 0; i < numberOfPokimons; i++) {
-//		cout << *arr1[i] << endl;
-//	}
-//
-//	pokimonMaster.GetAllPokemonsByLevel(-1, arr1, &numberOfPokimons);
-//	for (int i = 0; i < numberOfPokimons; i++) {
-//		cout << *arr1[i] << endl;
-//	}
-//	pokimonMaster.printAllTrees();
-//
-//	pokimonMaster.FreePokemon(1);
-//	pokimonMaster.FreePokemon(2);
-//	pokimonMaster.FreePokemon(4);
-//	pokimonMaster.FreePokemon(6);
+	try {
+		pokimonMaster.LevelUp(1,NULL);
+	} catch (InvaildInput& e) {
+		cout << "InvaildInput" << endl;
+	}
+	try {
+		pokimonMaster.LevelUp(37,7);
+	} catch (Failure& e) {
+		cout << "failure" << endl;
+	}
+
+	pokimonMaster.printAllTrees();
+
+	pokimonMaster.FreePokemon(1);
+	pokimonMaster.FreePokemon(2);
+	pokimonMaster.FreePokemon(4);
+	pokimonMaster.FreePokemon(6);
 
 	return true;
 

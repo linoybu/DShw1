@@ -177,7 +177,7 @@ public:
 
 void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		int *numOfPokemon) {
-	if (trainerID == 0 || !numOfPokemon) {
+	if (trainerID == 0 || !numOfPokemon||!pokemons) {
 		throw InvaildInput();
 	}
 	if (trainerID > 0) {
@@ -190,7 +190,7 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			pokemons = NULL;
 			return;
 		}
-		pokemons = (int**) malloc(sizeof(int) * (*numOfPokemon));
+		*pokemons = (int*) malloc(sizeof(int) * (*numOfPokemon));
 		if (!pokemons) {
 			throw std::bad_alloc();
 		}
@@ -199,9 +199,13 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 				new pair<Pokimon, pair<int, int> >*[*numOfPokemon];
 		arrayFunctionGetAll func = arrayFunctionGetAll();
 		trainer->gettree()->toArr(arr, numOfPokemon, func);
-
-		for (int i = *numOfPokemon - 1, j = 0; i > 0; i--, j++) {
-			pokemons[j] = new int(arr[i]->getValue().getId());
+		int i = *numOfPokemon - 1;
+		int j = 0;
+		for (i; i >= 0; i--, j++) {
+			(*pokemons)[j] =  arr[i]->getValue().getId();
+		}
+		for(i=0;i<*numOfPokemon;i++){
+			delete arr[i];
 		}
 
 		delete arr;
@@ -212,7 +216,7 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			pokemons = NULL;
 			return;
 		}
-		pokemons = (int**) malloc(sizeof(int) * (*numOfPokemon));
+		*pokemons = (int*) malloc(sizeof(int) * (*numOfPokemon));
 		if (!pokemons) {
 			throw std::bad_alloc();
 		}
@@ -222,8 +226,11 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		arrayFunctionGetAll func = arrayFunctionGetAll();
 		levelPokimonTree->toArr(arr, numOfPokemon, func);
 
-		for (int i = *numOfPokemon - 1, j = 0; i > 0; i--, j++) {
-			pokemons[j] = new int(arr[i]->getValue().getId());
+		for (int i = *numOfPokemon - 1, j = 0; i >= 0; i--, j++) {
+			(*pokemons)[j] = arr[i]->getValue().getId();
+		}
+		for(int i=0;i<*numOfPokemon;i++){
+			delete arr[i];
 		}
 		delete arr;
 
