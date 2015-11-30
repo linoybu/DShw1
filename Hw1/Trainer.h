@@ -43,7 +43,7 @@ public:
 	void addPokimon(Pokimon& pokimon);
 	void removePokimon(pair<int,int>& key);
 	int getNumberOfPokimons();
-	Pokimon* findPokimon(int id,int level); //TODO
+	Pokimon* findPokimon(int id,int level);
 	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree>*  gettree(){
 		return pokimonTree;
 	}

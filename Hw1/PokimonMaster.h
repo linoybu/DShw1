@@ -41,13 +41,12 @@ public:
 //	 *                SUCCESS - Otherwise.
 	void CatchPokemon(int pokemonID, int trainerID, int level);
 	void FreePokemon(int pokemonID);
-	void LevelUp(int pokemonID, int levelIncrease); //TODO -LIOR
+	void LevelUp(int pokemonID, int levelIncrease);
 	void EvolvePokemon(int pokemonID, int evolvedID);
-	void GetTopPokemon(int trainerID, int *pokemonID); //TODO -LIOR
+	void GetTopPokemon(int trainerID, int *pokemonID);
 	void GetAllPokemonsByLevel(int trainerID, int **pokemons,
-			int *numOfPokemon); //TODO -LIOR
+			int *numOfPokemon);
 	void UpdateLevels(int stoneCode, int stoneFactor); //TODO - to be or not to be:)
-	void Quit(); //TODO -LINOY
 	void printAllTrees();
 
 };
@@ -58,7 +57,7 @@ public:
 	fatherMatchSon1() {
 		this->IsTrue = true;
 	}
-	void operator()(Node<Pokimon,int>* ptr) {
+	void operator()(Node<Pokimon, int>* ptr) {
 		if (ptr->getLeftSon() == NULL && ptr->getRightSon() != NULL) {
 			this->IsTrue = (this->IsTrue
 					&& (ptr->getRightSon()->getFather() == ptr));
@@ -85,8 +84,8 @@ public:
 	fatherMatchSon2() {
 		this->IsTrue = true;
 	}
-	void operator()(Node<Pokimon,pair<int,int> >* ptr) {
-		if(ptr->getheight()>=2){
+	void operator()(Node<Pokimon, pair<int, int> >* ptr) {
+		if (ptr->getheight() >= 2) {
 			this->IsTrue = false;
 		}
 		if (ptr->getLeftSon() == NULL && ptr->getRightSon() != NULL) {
@@ -118,7 +117,7 @@ public:
 
 class print2 {
 public:
-	void operator()(pair<int,int> x, Pokimon& value) {
+	void operator()(pair<int, int> x, Pokimon& value) {
 		cout << value << ",";
 	}
 };

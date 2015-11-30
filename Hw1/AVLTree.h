@@ -717,7 +717,7 @@ T& AVLTree<T, Key, CompareKey>::find(Key& key) {
 	CompareKey compFunc = CompareKey();
 	ptr = findNodeReq(key, ptr, compFunc);
 	if ((!ptr)||compFunc(*(ptr->getKey()), key) != 0) {
-		throw NotINTheTree();
+		throw Failure();
 	}
 	return *(ptr->getValue());
 }
