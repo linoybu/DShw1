@@ -208,8 +208,12 @@ bool testUpdeteLevel(){
 	pokimonMaster.CatchPokemon(8, 1, 8);
 	pokimonMaster.CatchPokemon(9, 1, 9);
 	pokimonMaster.CatchPokemon(10, 1, 10);
-	pokimonMaster.UpdateLevels(2,2);
+	pokimonMaster.UpdateLevels(3,3);
 	pokimonMaster.printAllTrees();
+	int id;
+	pokimonMaster.GetTopPokemon(-1,&id);
+	ASSERT_EQUALS(id, 9);
+	return true;
 
 
 
@@ -331,31 +335,47 @@ bool testUpdeteLevel(){
 //}
 
 
-bool generelTests(){
-	PokimonMaster pokimonMaster = PokimonMaster();
-	for (int i = 1; i <= 10; ++i) {
-		pokimonMaster.addTrainer(i);
-	}
-	int k =1;
-	for(int i =1; i<100;i++){
-		for(int j=1;j<25;j++,i++){
-			pokimonMaster.CatchPokemon(i, k, j);
-			k++;
-			if(k==10){
-				k=1;
-			}
-		}
-	}
+//bool generelTests(){
+//	PokimonMaster pokimonMaster = PokimonMaster();
+//	ASSERT_THROW(InvaildInput,	pokimonMaster.UpdateLevels(0,5));
+//	ASSERT_THROW(InvaildInput,	pokimonMaster.UpdateLevels(3,-2));
+//	cout<<"1- no pokimons "<<endl;
+//	pokimonMaster.UpdateLevels(99,5);
 //	pokimonMaster.printAllTrees();
-	pokimonMaster.UpdateLevels(99,5);
-	pokimonMaster.printAllTrees();
-
-}
+//
+//	for (int i = 1; i <= 10; ++i) {
+//		pokimonMaster.addTrainer(i);
+//	}
+//
+//	int k =1;
+//	for(int i =1; i<100;i++){
+//		for(int j=1;j<25;j++,i++){
+//			pokimonMaster.CatchPokemon(i, k, j);
+//			k++;
+//			if(k==10){
+//				k=1;
+//			}
+//		}
+//	}
+//
+//	pokimonMaster.addTrainer(20);
+//	cout<<"2- no pokimons to trainer 20 "<<endl;
+//	pokimonMaster.UpdateLevels(7,2);
+//	pokimonMaster.printAllTrees();
+//
+//	cout<<"3- no change "<<endl;
+//	pokimonMaster.UpdateLevels(20,2);
+//	pokimonMaster.printAllTrees();
+//
+//
+//	return true;
+//
+//}
 
 
 int main() {
 	//cout << testGetAllPokemonsByLevel() << endl;
-//	testUpdeteLevel();
-	generelTests();
+cout<<testUpdeteLevel()<<endl;
+//cout<<"final result "<<generelTests()<<endl;
 }
 

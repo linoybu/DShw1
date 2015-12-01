@@ -49,7 +49,7 @@ public:
 	void GetTopPokemon(int trainerID, int *pokemonID);
 	void GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			int *numOfPokemon);
-	void UpdateLevels(int stoneCode, int stoneFactor); //TODO - to be or not to be:)
+	void UpdateLevels(int stoneCode, int stoneFactor);
 	void printAllTrees();
 
 };
