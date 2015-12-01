@@ -12,7 +12,7 @@
 
 Trainer::Trainer(int id) :
 		id(id), bestPokimon(NULL), pokimonTree(
-				new AVLTree<Pokimon, pair<int, int>, CompareKeysForTrainerTree>()) {
+				new AVLTree<Pokimon, pair<int, int>, compareByLevel>()) {
 	if (id <= 0) {
 		throw InvaildInput();
 	}
@@ -20,7 +20,7 @@ Trainer::Trainer(int id) :
 
 Trainer::Trainer(const Trainer& trainer) :
 		id(trainer.id), bestPokimon(trainer.bestPokimon),
-		pokimonTree(new AVLTree<Pokimon,pair<int,int>,CompareKeysForTrainerTree>(*(trainer.pokimonTree)))
+		pokimonTree(new AVLTree<Pokimon,pair<int,int>,compareByLevel>(*(trainer.pokimonTree)))
 		{
 		}
 

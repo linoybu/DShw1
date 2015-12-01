@@ -12,25 +12,25 @@
 #include <stdlib.h>
 
 ///***TODO do we need this class? we have this function on pokimon
-//** key = level value =ID
-class CompareKeysForTrainerTree {
-public:
-	int operator()(pair<int,int>& key1, pair<int,int>& key2) {
-		//first we compare by level
-		if(key1.getKey()!=key2.getKey()){
-			return (key1.getKey()-key2.getKey());
-		}// if the levels are equals we compare by id
-	return (key2.getValue()-key1.getValue());
-	// smallest id is bigger key therefore we return key2-key1
-	}
-};
+////** key = level value =ID
+//class CompareKeysForTrainerTree {
+//public:
+//	int operator()(pair<int,int>& key1, pair<int,int>& key2) {
+//		//first we compare by level
+//		if(key1.getKey()!=key2.getKey()){
+//			return (key1.getKey()-key2.getKey());
+//		}// if the levels are equals we compare by id
+//	return (key2.getValue()-key1.getValue());
+//	// smallest id is bigger key therefore we return key2-key1
+//	}
+//};
 
 /****************************Trainer class*************************************/
 class Trainer {
 	int id;
 	Pokimon* bestPokimon;
 	// the keys at the trainer's pokimons tree are pairs of (level,id)
-	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree>* pokimonTree ;
+	AVLTree< Pokimon,pair<int,int>, compareByLevel>* pokimonTree ;
 
 public:
 	Trainer(int id);
@@ -44,7 +44,7 @@ public:
 	void removePokimon(pair<int,int>& key);
 	int getNumberOfPokimons();
 	Pokimon* findPokimon(int id,int level);
-	AVLTree< Pokimon,pair<int,int>, CompareKeysForTrainerTree>*  gettree(){
+	AVLTree< Pokimon,pair<int,int>, compareByLevel>*  gettree(){
 		return pokimonTree;
 	}
 

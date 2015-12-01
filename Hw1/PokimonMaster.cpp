@@ -177,7 +177,7 @@ public:
 
 void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		int *numOfPokemon) {
-	if (trainerID == 0 || !numOfPokemon||!pokemons) {
+	if (trainerID == 0 || !numOfPokemon || !pokemons) {
 		throw InvaildInput();
 	}
 	if (trainerID > 0) {
@@ -202,9 +202,9 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		int i = *numOfPokemon - 1;
 		int j = 0;
 		for (i; i >= 0; i--, j++) {
-			(*pokemons)[j] =  arr[i]->getValue().getId();
+			(*pokemons)[j] = arr[i]->getValue().getId();
 		}
-		for(i=0;i<*numOfPokemon;i++){
+		for (i = 0; i < *numOfPokemon; i++) {
 			delete arr[i];
 		}
 
@@ -229,7 +229,7 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		for (int i = *numOfPokemon - 1, j = 0; i >= 0; i--, j++) {
 			(*pokemons)[j] = arr[i]->getValue().getId();
 		}
-		for(int i=0;i<*numOfPokemon;i++){
+		for (int i = 0; i < *numOfPokemon; i++) {
 			delete arr[i];
 		}
 		delete arr;
@@ -237,7 +237,167 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 	}
 
 }
+
+class GetAllEvolvedPoks {
+	int stoneCode;
+public:
+	GetAllEvolvedPoks(int stoneCode) :
+			stoneCode(stoneCode) {
+
+	}
+	bool operator()(pair<int, int>& key, Pokimon& value) {
+		return ((value.getId() % stoneCode) == 0);
+	}
+};
+class GetAllNotEvolvedPoks {
+	int stoneCode;
+public:
+	GetAllNotEvolvedPoks(int stoneCode) :
+			stoneCode(stoneCode) {
+
+	}
+
+	bool operator()(pair<int, int>& key, Pokimon& value) {
+		return !((value.getId() % stoneCode) == 0);
+	}
+
+};
+
+void marge(pair<Pokimon, pair<int, int> >** arr1,
+		pair<Pokimon, pair<int, int> >** arr2,
+		pair<Pokimon, pair<int, int> >** unionArrs, int arr1Size, int arr2Size,
+		int unionSize) {
+	pair<Pokimon, pair<int, int> >** pToArr1 = arr1;
+	pair<Pokimon, pair<int, int> >** pToArr2 = arr2;
+//	pair<Pokimon, pair<int, int> >** pToUnion = unionArrs;
+	compareByLevel compareFunc = compareByLevel();
+	int i = 0;
+	while (arr1Size && arr2Size) {
+		if (compareFunc((*pToArr1)->getKey(), (*pToArr2)->getKey()) < 0) {
+			unionArrs[i] = new pair<Pokimon, pair<int, int> >(
+					(*pToArr1)->getKey(), (*pToArr1)->getValue());
+			pToArr1++;
+			arr1Size--;
+			i++;
+		} else {
+			unionArrs[i] = new pair<Pokimon, pair<int, int> >(
+					(*pToArr2)->getKey(), (*pToArr2)->getValue());
+			pToArr2++;
+			arr2Size--;
+			i++;
+
+		}
+	}
+	if (!arr1Size) {
+		while (arr2Size) {
+			unionArrs[i] = new pair<Pokimon, pair<int, int> >(
+					(*pToArr2)->getKey(), (*pToArr2)->getValue());
+			pToArr2++;
+			arr2Size--;
+			i++;
+
+		}
+	} else if (!arr2Size) {
+		while (arr1Size) {
+			unionArrs[i] = new pair<Pokimon, pair<int, int> >(
+					(*pToArr1)->getKey(), (*pToArr1)->getValue());
+			pToArr1++;
+			arr1Size--;
+			i++;
+
+		}
+	}
+
+}
+
+void PokimonMaster::updateLevelsForTree(int stoneCode, int stoneFactor,
+		AVLTree<Pokimon, pair<int, int>, compareByLevel>* tree,
+		pair<Pokimon, pair<int, int> >** unionArrs) {
+	int numOfPok = tree->getNumOfVertices();
+	pair<Pokimon, pair<int, int> >** evolvedArr = new pair<Pokimon,
+			pair<int, int> >*[numOfPok];
+	pair<Pokimon, pair<int, int> >** notEvolvedArr = new pair<Pokimon,
+			pair<int, int> >*[numOfPok];
+	GetAllEvolvedPoks getEvolvedFunc = GetAllEvolvedPoks(stoneCode);
+	GetAllNotEvolvedPoks getAllNotEvolvedFunc = GetAllNotEvolvedPoks(stoneCode);
+	int numEvolvedPoks = 0;
+	int numNotEvolvedPoks = 0;
+	tree->toArr(evolvedArr, &numEvolvedPoks, getEvolvedFunc);
+	tree->toArr(notEvolvedArr, &numNotEvolvedPoks, getAllNotEvolvedFunc);
+	for (int i = 0; i < numEvolvedPoks; i++) {
+		int newLevel = (evolvedArr[i]->getValue().getLevel()) * stoneFactor;
+		evolvedArr[i]->getValue().setLevel(newLevel);
+		evolvedArr[i]->getKey().setKey(newLevel);
+	}
+
+	marge(evolvedArr, notEvolvedArr, unionArrs, numEvolvedPoks,
+			numNotEvolvedPoks, numOfPok);
+	//***** free the arrays after we union them
+	for (int i = 0; i < numEvolvedPoks; i++) {
+		delete evolvedArr[i];
+	}
+	delete evolvedArr;
+	for (int i = 0; i < numNotEvolvedPoks; i++) {
+		delete notEvolvedArr[i];
+	}
+	delete notEvolvedArr;
+
+}
+
+class UpdateLevelForIdTree {
+	int stoneCode;
+	int stoneFactor;
+public:
+	UpdateLevelForIdTree(int stoneCode, int stoneFactor) :
+			stoneCode(stoneCode), stoneFactor(stoneFactor) {
+	}
+	void operator()(int& key, Pokimon& value){
+		if(value.getLevel()%stoneCode==0){
+			int newLevel = value.getLevel()*stoneFactor;
+			value.setLevel(newLevel);
+			key =newLevel;
+		}
+	}
+
+
+};
+
 void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
+	if(stoneCode<1||stoneFactor<1){
+		throw InvaildInput();
+	}
+	//** update levels tree
+	int numOfPok = this->levelPokimonTree->getNumOfVertices();
+	pair<Pokimon, pair<int, int> >** unionArrs = new pair<Pokimon,
+			pair<int, int> >*[numOfPok];
+	this->updateLevelsForTree(stoneCode, stoneFactor, this->levelPokimonTree,
+			unionArrs);
+	this->levelPokimonTree->cleanTree();
+	this->levelPokimonTree->arrToAvlTree(numOfPok, unionArrs);
+	this->bestPokimon = &this->levelPokimonTree->getMax();
+	for (int i = 0; i < numOfPok; i++) {
+		delete unionArrs[i];
+	}
+	delete unionArrs;
+	Iterator<Trainer> it = trainerList.begin();
+	///**** update trainers
+	for (it; it != trainerList.end(); ++it) {
+		int numOfPok = ((*it).gettree())->getNumOfVertices();
+		unionArrs = new pair<Pokimon, pair<int, int> >*[numOfPok];
+		this->updateLevelsForTree(stoneCode, stoneFactor, ((*it).gettree()),
+				unionArrs);
+		((*it).gettree())->cleanTree();
+		((*it).gettree())->arrToAvlTree(numOfPok, unionArrs);
+		((*it).setBestPokimon(&((*it).gettree())->getMax()));
+		for (int i = 0; i < numOfPok; i++) {
+			delete unionArrs[i];
+		}
+		delete unionArrs;
+
+	}
+	//*** update id tree
+	UpdateLevelForIdTree updateFunc= UpdateLevelForIdTree(stoneCode,stoneFactor);
+	this->idPokimonTree->inOrder(updateFunc);
 
 }
 
@@ -290,50 +450,3 @@ void PokimonMaster::GetTopPokemon(int trainerID, int *pokemonID) {
 		*pokemonID = bestPokimon->getId();
 }
 
-//
-//void PokimonMaster::updateLevelHelper(AVLTree<Pokimon,pair<int,int>,compareByLevel >* tree){
-//	tree->toArr()
-//
-//
-//}
-//
-//class conditionForArr{
-//
-//
-//
-//};
-//
-//void merge(int a[], int m, int b[], int n, int sorted[]) {
-//  int i, j, k;
-//
-//  j = k = 0;
-//
-//  for (i = 0; i < m + n;) {
-//    if (j < m && k < n) {
-//      if (a[j] < b[k]) {
-//        sorted[i] = a[j];
-//        j++;
-//      }
-//      else {
-//        sorted[i] = b[k];
-//        k++;
-//      }
-//      i++;
-//    }
-//    else if (j == m) {
-//      for (; i < m + n;) {
-//        sorted[i] = b[k];
-//        k++;
-//        i++;
-//      }
-//    }
-//    else {
-//      for (; i < m + n;) {
-//        sorted[i] = a[j];
-//        j++;
-//        i++;
-//      }
-//    }
-//  }
-//}
-//

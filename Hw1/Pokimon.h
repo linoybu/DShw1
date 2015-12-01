@@ -31,19 +31,20 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Pokimon& pokimon);
 };
 
-
-
-// key = level value = id
+//** key = level value =ID
 class compareByLevel {
 public:
-	int operator()(pair<int, int> firstPok, pair<int, int> secPok) {
-		if (firstPok.getKey() != secPok.getKey()) {
-			return (firstPok.getKey() - secPok.getKey());
-		}
-		return (secPok.getValue() - firstPok.getValue());
+	int operator()(pair<int,int>& key1, pair<int,int>& key2) {
+		//first we compare by level
+		if(key1.getKey()!=key2.getKey()){
+			return (key1.getKey()-key2.getKey());
+		}// if the levels are equals we compare by id
+	return (key2.getValue()-key1.getValue());
+	// smallest id is bigger key therefore we return key2-key1
 	}
-
 };
+
+
 
 //** they say that the better id is the smallest one,but im not sure
 //** check later

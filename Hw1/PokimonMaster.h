@@ -29,6 +29,9 @@ class PokimonMaster {
 	void addPokimonInIdTree(Pokimon& pokimon);
 	void addPokimonInLevelTree(Pokimon& pokimon);
 //	void updateLevelHelper(AVLTree<Pokimon,pair<int,int>,compareByLevel >* tree);
+	void updateLevelsForTree(int stoneCode, int stoneFactor,
+			AVLTree<Pokimon, pair<int, int>, compareByLevel>* tree,
+			pair<Pokimon, pair<int, int> >** unionArrs);
 
 public:
 	PokimonMaster();

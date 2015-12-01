@@ -597,6 +597,7 @@ public:
 	AVLTree();
 	AVLTree(const AVLTree<T, Key, CompareKey>&);
 	~AVLTree();
+	void cleanTree();
 	T& find(Key& key);
 	T* deleteVertice(Key& key);
 	template<class inScanFunc>
@@ -610,7 +611,7 @@ public:
 	T& getMax();
 	int getNumOfVertices();
 	void addVertices(T* value, Key* key);
-	void arrToAvlTree(int arrSize, pair<T, Key>* arr);
+	void arrToAvlTree(int arrSize, pair<T, Key>** arr);
 
 
 	//****TODO deltet it
@@ -645,6 +646,12 @@ AVLTree<T, Key, CompareKey>::~AVLTree() {
 	delete (root);
 }
 //*
+template<class T, class Key, class CompareKey>
+void AVLTree<T, Key, CompareKey>::cleanTree(){
+	delete (root);
+	root = NULL;
+	this->numOfVertices=0;
+}
 
 template<class T, class Key, class CompareKey>
 void AVLTree<T, Key, CompareKey>::addVertices(T* value, Key* key) {
@@ -794,11 +801,11 @@ public:
 //*** function for the inorder func that will fill the tree with the arr
 template<class T, class Key, class CompareKey>
 class fillTreeInlineFunc {
-	pair<T, Key>* arr;
+	pair<T, Key>** arr;
 	int arrSize;
 	int numOfLeaveLowLevel;
 public:
-	fillTreeInlineFunc(pair<T, Key>* arr, int arrSize, int numOfLeaveLowLevel) :
+	fillTreeInlineFunc(pair<T, Key>** arr, int arrSize, int numOfLeaveLowLevel) :
 			arr(arr), arrSize(arrSize), numOfLeaveLowLevel(numOfLeaveLowLevel) {
 	}
 	void operator()(Node<T, Key>* node) {
@@ -811,15 +818,15 @@ public:
 			}
 			numOfLeaveLowLevel--;
 		}
-		node->setValue(new T((arr)->getValue()));
-		node->setKey(new Key((arr)->getKey()));
+		node->setValue(new T((*arr)->getValue()));
+		node->setKey(new Key((*arr)->getKey()));
 		arr++;
 		arrSize--;
 	}
 };
 
 template<class T, class Key, class CompareKey>
-void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>* arr) {
+void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>** arr) {
 	int height = ceil(log2(arrSize));
 	int numberOfLeaves = arrSize - (pow(2, height - 1) - 1);
 	this->root = this->fillTreeWithBlankNodes(height, root);
