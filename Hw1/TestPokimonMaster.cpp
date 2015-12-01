@@ -329,8 +329,33 @@ bool testUpdeteLevel(){
 //	return true;
 
 //}
+
+
+bool generelTests(){
+	PokimonMaster pokimonMaster = PokimonMaster();
+	for (int i = 1; i <= 10; ++i) {
+		pokimonMaster.addTrainer(i);
+	}
+	int k =1;
+	for(int i =1; i<100;i++){
+		for(int j=1;j<25;j++,i++){
+			pokimonMaster.CatchPokemon(i, k, j);
+			k++;
+			if(k==10){
+				k=1;
+			}
+		}
+	}
+//	pokimonMaster.printAllTrees();
+	pokimonMaster.UpdateLevels(99,5);
+	pokimonMaster.printAllTrees();
+
+}
+
+
 int main() {
 	//cout << testGetAllPokemonsByLevel() << endl;
-	testUpdeteLevel();
+//	testUpdeteLevel();
+	generelTests();
 }
 

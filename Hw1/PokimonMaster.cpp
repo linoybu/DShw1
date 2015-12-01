@@ -368,6 +368,9 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	}
 	//** update levels tree
 	int numOfPok = this->levelPokimonTree->getNumOfVertices();
+	if(!numOfPok){
+		return;
+	}
 	pair<Pokimon, pair<int, int> >** unionArrs = new pair<Pokimon,
 			pair<int, int> >*[numOfPok];
 	this->updateLevelsForTree(stoneCode, stoneFactor, this->levelPokimonTree,
@@ -384,6 +387,9 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	for (it; it != trainerList.end(); ++it) {
 		int numOfPok = ((*it).gettree())->getNumOfVertices();
 		unionArrs = new pair<Pokimon, pair<int, int> >*[numOfPok];
+		if(!numOfPok){
+			continue;
+		}
 		this->updateLevelsForTree(stoneCode, stoneFactor, ((*it).gettree()),
 				unionArrs);
 		((*it).gettree())->cleanTree();
