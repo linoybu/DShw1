@@ -31,7 +31,6 @@ bool Trainer::operator==(const Trainer& trainer) {
 }
 Trainer::~Trainer() {
 	delete pokimonTree;
-	// Default detractor
 }
 
 int const Trainer::getId() const {

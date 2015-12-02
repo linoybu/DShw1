@@ -72,8 +72,10 @@ PokimonMaster::PokimonMaster() :
 
 PokimonMaster::~PokimonMaster() {
 	Iterator<Trainer*> it = trainerList.begin();
-	for (; it != trainerList.end(); it++) {
-		delete (*it);
+	int a = trainerList.getSize();
+	for(int i=0;i<a;i++){
+		delete *(trainerList.begin());
+		trainerList.remove(trainerList.begin());
 	}
 	delete idPokimonTree;
 	delete levelPokimonTree;
