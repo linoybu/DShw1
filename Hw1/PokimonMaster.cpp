@@ -86,8 +86,8 @@ void PokimonMaster::addTrainer(int id) {
 	if (this->findTrainer(id)) {
 		throw Failure();
 	}
-	Trainer* newTrainer = new Trainer(id);
-	trainerList.insert(newTrainer, trainerList.end());
+//	Trainer* newTrainer = new Trainer(id);
+	trainerList.insert(new Trainer(id), trainerList.end());
 }
 
 //ALLOCATION_ERROR - In case of an allocation error.
@@ -174,6 +174,9 @@ void PokimonMaster::EvolvePokemon(int pokemonID, int evolvedID) {
 	if (!this->idPokimonTree->find(pokemonID)) {
 		throw Failure();
 	}
+	if (this->idPokimonTree->find(evolvedID)) {
+		throw Failure();
+	}
 	Pokimon* pokimon = this->idPokimonTree->deleteVertice(pokemonID);
 	int id = pokimon->getId();
 	int level = pokimon->getLevel();
@@ -243,7 +246,7 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			delete arr[i];
 		}
 
-		//delete arr;
+		delete[] arr;
 
 	} else {
 		*numOfPokemon = this->levelPokimonTree->getNumOfVertices();
@@ -269,7 +272,8 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 		for (int i = 0; i < *numOfPokemon; i++) {
 			delete arr[i];
 		}
-		//delete arr;
+		delete[] arr;
+		//TODO
 
 	}
 
@@ -374,13 +378,14 @@ void PokimonMaster::updateLevelsForTree(int stoneCode, int stoneFactor,
 	marge(evolvedArr, notEvolvedArr, unionArrs, numEvolvedPoks,
 			numNotEvolvedPoks, numOfPok);
 	//***** free the arrays after we union them
-//	for (int i = 0; i < numEvolvedPoks; i++) {
-//		delete evolvedArr[i];
-//	}
+	//TODO
+	for (int i = 0; i < numEvolvedPoks; i++) {
+		delete evolvedArr[i];
+	}
 	delete[] evolvedArr;
-//	for (int i = 0; i < numNotEvolvedPoks; i++) {
-//		delete notEvolvedArr[i];
-//	}
+	for (int i = 0; i < numNotEvolvedPoks; i++) {
+		delete notEvolvedArr[i];
+	}
 	delete[] notEvolvedArr;
 
 }
