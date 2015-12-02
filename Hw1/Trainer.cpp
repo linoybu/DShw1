@@ -52,6 +52,10 @@ void Trainer::addPokimon(Pokimon& pokimon) {
 	int level = pokimon.getLevel();
 	pair<int, int> key = pair<int, int>(level, id);
 	(this->pokimonTree)->addVertices(&pokimon, &key);
+	if(this->pokimonTree->getNumOfVertices()==0){
+		bestPokimon=NULL;
+		return;
+	}
 	bestPokimon = &this->pokimonTree->getMax();
 
 }
@@ -60,18 +64,20 @@ void Trainer::removePokimon(pair<int, int>& key) {
 
 	Pokimon* pokimon = (this->pokimonTree)->deleteVertice(key);
 	delete pokimon;
-	try{
-	bestPokimon = &pokimonTree->getMax(); //using = operator
-	} catch (EmptyTree& e) {
-			this->setBestPokimon(NULL);
+	if(this->pokimonTree->getNumOfVertices()==0){
+		this->setBestPokimon(NULL);
+		return;
 	}
-
+	bestPokimon = &pokimonTree->getMax(); //using = operator
 }
 
  Pokimon* Trainer::findPokimon(int id,int level){
  pair<int,int> key =pair<int,int>(level,id);
- return &(this->pokimonTree->find(key));
- //if the pokimon not in the tree we throw exception "Failure"
+ Pokimon* pokimon=(this->pokimonTree->find(key));
+ if(!pokimon){
+	 throw Failure();
+ }
+ return pokimon;
 }
 
 

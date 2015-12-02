@@ -18,7 +18,7 @@ using std::endl;
 #include "list.h"
 
 class PokimonMaster {
-	List<Trainer> trainerList;
+	List<Trainer*> trainerList;
 	AVLTree<Pokimon, int, compareByID>* idPokimonTree;
 	AVLTree<Pokimon, pair<int, int>, compareByLevel>* levelPokimonTree;
 	Pokimon* bestPokimon;
@@ -50,7 +50,7 @@ public:
 	void GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			int *numOfPokemon);
 	void UpdateLevels(int stoneCode, int stoneFactor);
-	void printAllTrees();
+	//void printAllTrees();
 
 };
 

@@ -41,6 +41,9 @@ void Pokimon::setId(int id) {
 }
 
 int Pokimon::getId() {
+	if(!this){
+		return -1;
+	}
 	return this->id;
 
 }

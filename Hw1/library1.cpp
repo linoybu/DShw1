@@ -247,7 +247,11 @@ StatusType UpdateLevels(void *DS, int stoneCode, int stoneFactor){
  * Return Values: None.
  */
 void Quit(void** DS){
-	delete (PokimonMaster*)DS;
+	if(!DS){
+		return;
+	}
+	delete (*(PokimonMaster**)DS);
+	*DS =NULL;
 }
 
 

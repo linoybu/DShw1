@@ -598,7 +598,7 @@ public:
 	AVLTree(const AVLTree<T, Key, CompareKey>&);
 	~AVLTree();
 	void cleanTree();
-	T& find(Key& key);
+	T* find(Key& key);
 	T* deleteVertice(Key& key);
 	template<class inScanFunc>
 	void inOrder(inScanFunc& scanfunc);
@@ -719,20 +719,20 @@ int AVLTree<T, Key, CompareKey>::getNumOfVertices() {
 }
 
 template<class T, class Key, class CompareKey>
-T& AVLTree<T, Key, CompareKey>::find(Key& key) {
+T* AVLTree<T, Key, CompareKey>::find(Key& key) {
 	Node<T, Key>* ptr = this->root;
 	CompareKey compFunc = CompareKey();
 	ptr = findNodeReq(key, ptr, compFunc);
 	if ((!ptr)||compFunc(*(ptr->getKey()), key) != 0) {
-		throw Failure();
+		return NULL;
 	}
-	return *(ptr->getValue());
+	return (ptr->getValue());
 }
 
 template<class T, class Key, class CompareKey>
 T* AVLTree<T, Key, CompareKey>::deleteVertice(Key& key) {
 	if (!root) {
-		throw EmptyTree();
+		throw Failure();
 	}
 	CompareKey compareFunc = CompareKey();
 	Node<T, Key>* delNode = this->deleteVerticeReq(this->root, key,
@@ -827,6 +827,14 @@ public:
 
 template<class T, class Key, class CompareKey>
 void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>** arr) {
+	if(arrSize==1){
+		this->numOfVertices=1;
+		Node<T, Key>* node = new Node<T, Key>();
+		node->setValue(new T((*arr)->getValue()));
+		node->setKey(new Key((*arr)->getKey()));
+		this->root=node;
+		return;
+	}
 	int height = ceil(log2(arrSize));
 	int numberOfLeaves = arrSize - (pow(2, height - 1) - 1);
 	this->root = this->fillTreeWithBlankNodes(height, root);

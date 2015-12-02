@@ -9,8 +9,10 @@
 #include "AVLTree.h"
 #include "pair.h"
 #include "PokimonMaster.h"
+#include "library1.h"
 using std::cout;
 using std::endl;
+
 //
 //class fatherMatchSon {
 //public:
@@ -195,29 +197,29 @@ using std::endl;
 //
 //}
 
-bool testUpdeteLevel(){
-	PokimonMaster pokimonMaster = PokimonMaster();
-	pokimonMaster.addTrainer(1);
-	pokimonMaster.CatchPokemon(1, 1, 1);
-	pokimonMaster.CatchPokemon(2, 1, 2);
-	pokimonMaster.CatchPokemon(3, 1, 3);
-	pokimonMaster.CatchPokemon(4, 1, 4);
-	pokimonMaster.CatchPokemon(5, 1, 5);
-	pokimonMaster.CatchPokemon(6, 1, 6);
-	pokimonMaster.CatchPokemon(7, 1, 7);
-	pokimonMaster.CatchPokemon(8, 1, 8);
-	pokimonMaster.CatchPokemon(9, 1, 9);
-	pokimonMaster.CatchPokemon(10, 1, 10);
-	pokimonMaster.UpdateLevels(3,3);
-	pokimonMaster.printAllTrees();
-	int id;
-	pokimonMaster.GetTopPokemon(-1,&id);
-	ASSERT_EQUALS(id, 9);
-	return true;
-
-
-
-}
+//bool testUpdeteLevel(){
+//	PokimonMaster pokimonMaster = PokimonMaster();
+//	pokimonMaster.addTrainer(1);
+//	pokimonMaster.CatchPokemon(1, 1, 1);
+//	pokimonMaster.CatchPokemon(2, 1, 2);
+//	pokimonMaster.CatchPokemon(3, 1, 3);
+//	pokimonMaster.CatchPokemon(4, 1, 4);
+//	pokimonMaster.CatchPokemon(5, 1, 5);
+//	pokimonMaster.CatchPokemon(6, 1, 6);
+//	pokimonMaster.CatchPokemon(7, 1, 7);
+//	pokimonMaster.CatchPokemon(8, 1, 8);
+//	pokimonMaster.CatchPokemon(9, 1, 9);
+//	pokimonMaster.CatchPokemon(10, 1, 10);
+//	pokimonMaster.UpdateLevels(3,3);
+//	pokimonMaster.printAllTrees();
+//	int id;
+//	pokimonMaster.GetTopPokemon(-1,&id);
+//	ASSERT_EQUALS(id, 9);
+//	return true;
+//
+//
+//
+//}
 
 //bool testGetAllPokemonsByLevel() {
 //
@@ -373,9 +375,140 @@ bool testUpdeteLevel(){
 //}
 
 
+void tryfunc(int** arr){
+	*arr = (int*)malloc(sizeof(**arr)*5);
+	for(int i =0;i<5;i++){
+		int a=1;
+		((*arr)[i]) = a;
+	}
+}
+
 int main() {
-	//cout << testGetAllPokemonsByLevel() << endl;
-cout<<testUpdeteLevel()<<endl;
-//cout<<"final result "<<generelTests()<<endl;
+	int *arr;
+	tryfunc(&arr);
+void* pokimonMaster=Init();
+//AddTrainer (pokimonMaster,4);
+//AddTrainer (pokimonMaster,3);
+//CatchPokemon (pokimonMaster,101, 4 ,50);
+//AddTrainer (pokimonMaster,5);
+//CatchPokemon (pokimonMaster,101, 5 ,25);
+//CatchPokemon (pokimonMaster,102, 5, 25);
+//int top;
+//GetTopPokemon (pokimonMaster,-1,&top);
+//LevelUp (pokimonMaster,102, 26);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+//FreePokemon (pokimonMaster,102);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+//GetTopPokemon (pokimonMaster,5,&top);
+//EvolvePokemon (pokimonMaster,101, 105);
+//GetTopPokemon (pokimonMaster,-1,&top);
+//EvolvePokemon(pokimonMaster, 105, 101);
+//CatchPokemon(pokimonMaster ,105, 4 ,5);
+//CatchPokemon(pokimonMaster, 120, 5, 15);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+////GetAllPokemonsByLevel (pokimonMaster,4);
+////GetAllPokemonsByLevel (pokimonMaster,5);
+//UpdateLevels (pokimonMaster,5, 4);
+//int* arr;
+//GetAllPokemonsByLevel (pokimonMaster,-1,&arr,&top);
+//Quit(pokimonMaster);
+//
+//
+
+//	PokimonMaster pokimonMaster = PokimonMaster();
+//	pokimonMaster.addTrainer (4);
+//	pokimonMaster.addTrainer (3);
+//	pokimonMaster.CatchPokemon(101,4, 50);
+//	pokimonMaster.addTrainer(5);
+////	pokimonMaster.CatchPokemon (101, 5, 25);
+//	pokimonMaster.CatchPokemon (102, 5 ,25);
+//	int top;
+//	pokimonMaster.GetTopPokemon(-1,&top);
+//	pokimonMaster.LevelUp (102, 26);
+//	int* arr;
+//	int a;
+//	pokimonMaster.GetAllPokemonsByLevel(-1,&arr,&a);
+//	pokimonMaster.FreePokemon (102);
+//	pokimonMaster.GetAllPokemonsByLevel(-1,&arr,&a);
+//	pokimonMaster.GetTopPokemon(5,&top);
+int a;
+int *b;
+StatusType stat;
+stat=CatchPokemon (pokimonMaster,288, -3, 174);;
+cout<<stat<<endl;
+stat=GetTopPokemon (pokimonMaster,1,&a);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,255, 7, 26);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel(pokimonMaster, 101,&b,&a);
+cout<<stat<<endl;
+stat=GetTopPokemon (pokimonMaster,6,&a);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,163 ,9 ,332);
+cout<<stat<<endl;
+stat=LevelUp (pokimonMaster,260, 2);
+cout<<stat<<endl;
+stat=AddTrainer (pokimonMaster,3);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel (pokimonMaster,273,&b,&a);
+cout<<stat<<endl;
+stat=EvolvePokemon (pokimonMaster,378 ,366);
+cout<<stat<<endl;
+stat=LevelUp (pokimonMaster,289 ,21);
+cout<<stat<<endl;
+stat=UpdateLevels (pokimonMaster,1 ,-2);
+cout<<stat<<endl;
+stat=AddTrainer (pokimonMaster,0);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,193, 12, 158);
+cout<<stat<<endl;
+stat=FreePokemon (pokimonMaster,18);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel (pokimonMaster,282,&b,&a);
+cout<<stat<<endl;
+stat=LevelUp (pokimonMaster,196 ,8);
+cout<<stat<<endl;
+stat=GetTopPokemon (pokimonMaster,-1,&a);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel (pokimonMaster,298,&b,&a);
+cout<<stat<<endl;
+stat=FreePokemon (pokimonMaster,0);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel(pokimonMaster, 41,&b,&a);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,371 ,-3 ,132);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel (pokimonMaster,377,&b,&a);
+cout<<stat<<endl;
+stat=EvolvePokemon (pokimonMaster,247, 92);
+cout<<stat<<endl;
+stat=LevelUp (pokimonMaster,343 ,-5);
+cout<<stat<<endl;
+stat=LevelUp (pokimonMaster,381, 14);
+cout<<stat<<endl;
+stat=FreePokemon (pokimonMaster,-3);
+cout<<stat<<endl;
+stat=UpdateLevels (pokimonMaster,1 ,0);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,-20 ,9 ,75);
+cout<<stat<<endl;
+stat=GetAllPokemonsByLevel (pokimonMaster,-2,&b,&a);
+cout<<stat<<endl;
+stat=EvolvePokemon (pokimonMaster,399 ,289);
+cout<<stat<<endl;
+stat=CatchPokemon (pokimonMaster,199, 12, 305);
+cout<<stat<<endl;
+stat=GetTopPokemon (pokimonMaster,17,&a);
+cout<<stat<<endl;
+stat=EvolvePokemon (pokimonMaster,364 ,306);
+cout<<stat<<endl;
+stat=FreePokemon (pokimonMaster,11);
+stat=UpdateLevels (pokimonMaster,2 ,-3);
+stat=CatchPokemon (pokimonMaster,377, 7, 136);
+stat=AddTrainer (pokimonMaster,-2);
+stat=LevelUp (pokimonMaster,188 ,-3);
+stat=CatchPokemon (pokimonMaster,393, -5, 441);
+stat=GetTopPokemon (pokimonMaster,6,&a);
+int l=5;
 }
 
