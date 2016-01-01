@@ -7,18 +7,9 @@
 #include <cstdlib>
 #include <stddef.h>
 #include <new>
-//using std::cout;
-//using std::endl;
 
-//************************************test
-//class print1 {
-//public:
-//	void operator()(int x, int value) {
-//		cout << value << ",";
-//	}
-//};
-
-/**************************************helper classes**************************/
+using std::cout;
+using std::endl;
 
 /**********************************node class**********************************/
 
@@ -254,9 +245,7 @@ class AVLTree {
 	}
 
 	Node<T, Key>* minimumNode(Node<T, Key>* curNode) {
-//		while (curNode->getFather()) {
-//			curNode = curNode->getFather();
-//		}
+
 		while (curNode->getLeftSon()) {
 			curNode = curNode->getLeftSon();
 		}
@@ -424,35 +413,6 @@ class AVLTree {
 		Node<T, Key>* tempNode = firstNode;
 		firstNode = secNode;
 		secNode = tempNode;
-//		Node<T, Key>* tempFather = firstNode->getFather();
-//		Node<T, Key>* tempLSon = firstNode->getLeftSon();
-//		Node<T, Key>* tempRSon = firstNode->getRightSon();
-//		int tempHigh = firstNode->getheight();
-//		if (firstNode->getLeftSon() == secNode) {	//**firstnode father of secnode from left
-//			firstNode->setNode(secNode, secNode->getLeftSon(),
-//					secNode->getRightSon(), secNode->getheight());
-//			secNode->setNode(tempFather, firstNode,tempRSon, tempHigh);
-//		}
-//		else if (firstNode->getRightSon() == secNode) {	//**firstnode father of secnode from right
-//			firstNode->setNode(secNode, secNode->getLeftSon(),
-//					secNode->getRightSon(), secNode->getheight());
-//			secNode->setNode(tempFather, tempLSon,secNode, tempHigh);
-//		}
-//		else if (secNode->getLeftSon() == firstNode) {	//**secnode father of firstnode
-//			secNode->setNode(firstNode, firstNode,tempRSon, tempHigh);
-//			firstNode->setNode(secNode->getFather(), secNode,
-//					secNode->getRightSon(), secNode->getheight());
-//		}
-//		else if (secNode->getRightSon() == firstNode) {	//**firstnode father of secnode
-//			secNode->setNode(firstNode, firstNode,tempRSon, tempHigh);
-//			firstNode->setNode(secNode->getFather(), secNode->getLeftSon(),
-//							secNode, secNode->getheight());
-//		}
-//		else{
-//			firstNode->setNode(secNode->getFather(), secNode->getLeftSon(),
-//				secNode->getRightSon(), secNode->getheight());
-//		secNode->setNode(tempFather, tempLSon,tempRSon, tempHigh);
-//		}
 	}
 
 	//remove vartic in case the vartic have 2 sons
@@ -523,18 +483,13 @@ class AVLTree {
 				//** we got new node, we need to check if height need to be
 				//**updated
 				ptr->setheight(ptr->getMaxSonHeight() + 1);
-//				if (!ptr->getLeftSon()) {
-//					ptr->setheight((ptr->getheight()) + 1);
-//				}
+
 			} else {
 				ptr->setLeftSon(nodeToInsert);
 				nodeToInsert->setFather(ptr);
 				//** we got new node, we need to check if height need to be
 				//**updated
 				ptr->setheight(ptr->getMaxSonHeight() + 1);
-//				if (!ptr->getRightSon()) {
-//					ptr->setheight((ptr->getheight()) + 1);
-//				}
 			}
 			//** we add the node and updated, return.
 			return true;
@@ -561,10 +516,6 @@ class AVLTree {
 		} else if (comparefunc(*ptr->getKey(), key) > 0) {
 			bool vertAdd = addVerticeRec(ptr->getLeftSon(), key, nodeToInsert);
 			ptr->setheight(ptr->getMaxSonHeight() + 1);
-//			if (ptr->getLeftSon()->getheight()
-//					> ptr->getRightSon()->getheight()) {
-//				ptr->setheight(ptr->getheight() + 1);
-//			}
 			rolls(ptr);
 			return vertAdd;
 			//**if we need to put it in the right
@@ -613,21 +564,8 @@ public:
 	void addVertices(T* value, Key* key);
 	void arrToAvlTree(int arrSize, pair<T, Key>** arr);
 
-
-	//****TODO deltet it
-	template<class inScanFunc>
-	void NodeInOrder(inScanFunc scan);
 };
 
-///*****TODO for test delete it!!
-template<class T, class Key, class CompareKey>
-template<class inScanFunc>
-void AVLTree<T, Key, CompareKey>::NodeInOrder(inScanFunc scan) {
-	this->NodeinOrderRec(scan, this->root);
-
-}
-
-///****
 
 ///***** functions Realizations
 //* constructor and destructor
@@ -835,9 +773,10 @@ void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>** arr) 
 		this->root=node;
 		return;
 	}
-	int height = ceil(log2(arrSize));
+	//int height =log2( pow(2,(ceil(log2(arrSize))))-1)+1;
+	int height =ceil(log2(arrSize+1))-1;
 	int numberOfLeaves = arrSize - (pow(2, height - 1) - 1);
-	this->root = this->fillTreeWithBlankNodes(height, root);
+	this->root = this->fillTreeWithBlankNodes(height+1, root);
 	this->numOfVertices = arrSize;
 	fillTreeInlineFunc<T, Key, CompareKey> func = fillTreeInlineFunc<T, Key,
 			CompareKey>(arr, arrSize, numberOfLeaves);

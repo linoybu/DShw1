@@ -1,14 +1,10 @@
-/*
- * trainer.cpp
- *
- *  Created on: 26 бреб 2015
- *      Author: Lior
- */
 
 #include "Trainer.h"
 #include "exception.h"
 #include <stdlib.h>
 #include <iostream>
+using std::cout;
+using std::endl;
 
 Trainer::Trainer(int id) :
 		id(id), bestPokimon(NULL), pokimonTree(
@@ -19,11 +15,10 @@ Trainer::Trainer(int id) :
 }
 
 Trainer::Trainer(const Trainer& trainer) :
-		id(trainer.id), bestPokimon(trainer.bestPokimon),
-		pokimonTree(new AVLTree<Pokimon,pair<int,int>,compareByLevel>(*(trainer.pokimonTree)))
-		{
-		}
-
+		id(trainer.id), bestPokimon(trainer.bestPokimon), pokimonTree(
+				new AVLTree<Pokimon, pair<int, int>, compareByLevel>(
+						*(trainer.pokimonTree))) {
+}
 
 bool Trainer::operator==(const Trainer& trainer) {
 	return (this->id == trainer.id);
@@ -51,35 +46,34 @@ void Trainer::addPokimon(Pokimon& pokimon) {
 	int level = pokimon.getLevel();
 	pair<int, int> key = pair<int, int>(level, id);
 	(this->pokimonTree)->addVertices(&pokimon, &key);
-	if(this->pokimonTree->getNumOfVertices()==0){
-		bestPokimon=NULL;
+	if (this->pokimonTree->getNumOfVertices() == 0) {
+		bestPokimon = NULL;
 		return;
 	}
 	bestPokimon = &this->pokimonTree->getMax();
 
 }
 void Trainer::removePokimon(pair<int, int>& key) {
-
-
-	Pokimon* pokimon = (this->pokimonTree)->deleteVertice(key);
+	Pokimon* pokimon;
+		pokimon = (this->pokimonTree)->deleteVertice(key);
 	delete pokimon;
-	if(this->pokimonTree->getNumOfVertices()==0){
-		this->setBestPokimon(NULL);
-		return;
+		if (this->pokimonTree->getNumOfVertices() == 0) {
+			this->setBestPokimon(NULL);
+			return;
+
+		}
+		bestPokimon = &pokimonTree->getMax(); //using = operator
+
+}
+
+Pokimon* Trainer::findPokimon(int id, int level) {
+	pair<int, int> key = pair<int, int>(level, id);
+	Pokimon* pokimon = (this->pokimonTree->find(key));
+	if (!pokimon) {
+		throw Failure();
 	}
-	bestPokimon = &pokimonTree->getMax(); //using = operator
+	return pokimon;
 }
-
- Pokimon* Trainer::findPokimon(int id,int level){
- pair<int,int> key =pair<int,int>(level,id);
- Pokimon* pokimon=(this->pokimonTree->find(key));
- if(!pokimon){
-	 throw Failure();
- }
- return pokimon;
-}
-
-
 
 int Trainer::getNumberOfPokimons() {
 	return ((this->pokimonTree)->getNumOfVertices());

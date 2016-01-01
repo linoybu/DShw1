@@ -19,7 +19,7 @@ Trainer* PokimonMaster::findTrainer(int id) {
 	const IsTrainer isTrainer = IsTrainer(id);
 	Iterator<Trainer*> found = this->trainerList.find(isTrainer);
 	if (found == trainerList.end()) {
-		return NULL; //TODO - don't change it to failur!!!!!!!!!
+		return NULL;
 	}
 	return (*found);
 }
@@ -71,9 +71,9 @@ PokimonMaster::PokimonMaster() :
 }
 
 PokimonMaster::~PokimonMaster() {
-	Iterator<Trainer*> it = trainerList.begin();
-	int a = trainerList.getSize();
-	for(int i=0;i<a;i++){
+
+	int size = trainerList.getSize();
+	for (int i = 0; i < size; i++) {
 		delete *(trainerList.begin());
 		trainerList.remove(trainerList.begin());
 	}
@@ -82,13 +82,12 @@ PokimonMaster::~PokimonMaster() {
 }
 
 void PokimonMaster::addTrainer(int id) {
-	if (id < 0) {
+	if (id <= 0) {
 		throw InvaildInput();
 	}
 	if (this->findTrainer(id)) {
 		throw Failure();
 	}
-//	Trainer* newTrainer = new Trainer(id);
 	trainerList.insert(new Trainer(id), trainerList.end());
 }
 
@@ -164,7 +163,7 @@ void PokimonMaster::LevelUp(int pokemonID, int levelIncrease) {
 	if (!trainer) {
 		throw Failure();
 	}
-	trainer->removePokimon(key);
+		trainer->removePokimon(key);
 	trainer->addPokimon(newPokimon);
 
 }
@@ -269,13 +268,12 @@ void PokimonMaster::GetAllPokemonsByLevel(int trainerID, int **pokemons,
 
 		for (int i = *numOfPokemon - 1, j = 0; i >= 0; i--, j++) {
 			int id = arr[i]->getValue().getId();
-					(*pokemons)[j] = id;
+			(*pokemons)[j] = id;
 		}
 		for (int i = 0; i < *numOfPokemon; i++) {
 			delete arr[i];
 		}
 		delete[] arr;
-		//TODO
 
 	}
 
@@ -380,7 +378,6 @@ void PokimonMaster::updateLevelsForTree(int stoneCode, int stoneFactor,
 	marge(evolvedArr, notEvolvedArr, unionArrs, numEvolvedPoks,
 			numNotEvolvedPoks, numOfPok);
 	//***** free the arrays after we union them
-	//TODO
 	for (int i = 0; i < numEvolvedPoks; i++) {
 		delete evolvedArr[i];
 	}
@@ -404,7 +401,7 @@ public:
 		if (value.getLevel() % stoneCode == 0) {
 			int newLevel = value.getLevel() * stoneFactor;
 			value.setLevel(newLevel);
-			key = newLevel;
+		//	key = newLevel;
 		}
 	}
 
@@ -414,9 +411,20 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	if (stoneCode < 1 || stoneFactor < 1) {
 		throw InvaildInput();
 	}
+	if(stoneFactor==1){
+		return;
+	}
+
 	//** update levels tree
-	int numOfPok=0;
-	numOfPok= this->levelPokimonTree->getNumOfVertices();
+	///TODO
+		print pri = print();
+		this->idPokimonTree->inOrder(pri);
+		cout<<""<<endl;
+		print2 pri2 = print2();
+		this->levelPokimonTree->inOrder(pri2);
+		//TODO
+	int numOfPok = 0;
+	numOfPok = this->levelPokimonTree->getNumOfVertices();
 	if (!numOfPok) {
 		return;
 	}
@@ -425,16 +433,23 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	this->updateLevelsForTree(stoneCode, stoneFactor, this->levelPokimonTree,
 			unionArrs);
 	this->levelPokimonTree->cleanTree();
+	cout<<"array"<<endl;
+	for(int i=0;i<numOfPok;i++){
+		cout<<unionArrs[i]<<endl;
+	}
 	this->levelPokimonTree->arrToAvlTree(numOfPok, unionArrs);
 	this->bestPokimon = &this->levelPokimonTree->getMax();
-//	for (int i = 0; i < numOfPok; i++) {
-//		delete unionArrs[i];
-//	}
+	for (int i = 0; i < numOfPok; i++) {
+		delete unionArrs[i];
+		unionArrs[i] = NULL;
+	}
 	delete[] unionArrs;
+
 	Iterator<Trainer*> it = trainerList.begin();
 	///**** update trainers
 	for (; it != trainerList.end(); it++) {
-		int numOfPok = ((*it)->gettree())->getNumOfVertices();
+		int numOfPok=0;
+		numOfPok= ((*it)->gettree())->getNumOfVertices();
 		if (!numOfPok) {
 			continue;
 		}
@@ -444,45 +459,30 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 		((*it)->gettree())->cleanTree();
 		((*it)->gettree())->arrToAvlTree(numOfPok, unionArrs);
 		((*it)->setBestPokimon(&((*it)->gettree())->getMax()));
-//		for (int i = 0; i < numOfPok; i++) {
-//			delete unionArrs[i];
-//		}
+
+		for (int i = 0; i < numOfPok; i++) {
+			delete unionArrs[i];
+			unionArrs[i] = NULL;
+		}
 		delete[] unionArrs;
 
 	}
 	//*** update id tree
+	///TODO
+		this->idPokimonTree->inOrder(pri);
+		cout<<""<<endl;
+		this->levelPokimonTree->inOrder(pri2);
+		//TODO
 	UpdateLevelForIdTree updateFunc = UpdateLevelForIdTree(stoneCode,
 			stoneFactor);
 	this->idPokimonTree->inOrder(updateFunc);
-
+///TODO
+	this->idPokimonTree->inOrder(pri);
+	cout<<""<<endl;
+	this->levelPokimonTree->inOrder(pri2);
+	//TODO
 }
 
-//void PokimonMaster::printAllTrees() {
-//	fatherMatchSon1 fatherSon = fatherMatchSon1();
-//	fatherMatchSon2 fatherSon2 = fatherMatchSon2();
-//	print p1 = print();
-//	print2 p2 = print2();
-//	cout << "idTree:" << endl;
-//	this->idPokimonTree->inOrder(p1);
-//	cout << endl;
-//	this->idPokimonTree->NodeInOrder(fatherSon);
-//	cout << " fatherSonCheck: " << fatherSon.IsTrue << endl;
-//	cout << "levelTree:" << endl;
-//	this->levelPokimonTree->inOrder(p2);
-//	cout << endl;
-//	this->levelPokimonTree->NodeInOrder(fatherSon2);
-//	cout << " fatherSonCheck: " << fatherSon2.IsTrue << endl;
-//	Iterator<Trainer*> it = trainerList.begin();
-//	for (; it != trainerList.end(); ++it) {
-//		cout << " trainer: " << (*it)->getId() << " " << endl;
-//		((*it)->gettree())->inOrder(p2);
-//		cout << endl;
-//		(*it)->gettree()->NodeInOrder(fatherSon2);
-//		cout << " fatherSonCheck: " << fatherSon2.IsTrue << endl;
-//
-//	}
-//
-//}
 
 void PokimonMaster::GetTopPokemon(int trainerID, int *pokemonID) {
 	if (trainerID == 0 || pokemonID == NULL) {

@@ -1,9 +1,4 @@
-/*
- * pair.h
- *
- *  Created on: Nov 23, 2015
- *      Author: linoy
- */
+
 
 #ifndef PAIR_H_
 #define PAIR_H_

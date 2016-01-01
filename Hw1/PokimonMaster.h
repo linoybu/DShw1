@@ -1,15 +1,9 @@
-/*
- * PokimonMaster.h
- *
- *  Created on: Nov 28, 2015
- *      Author: linoy
- */
+
 
 #ifndef POKIMONMASTER_H_
 #define POKIMONMASTER_H_
 #include "Pokimon.h"
 #include "Trainer.h"
-#include "mtmtest.h"
 #include "AVLTree.h"
 #include "pair.h"
 using std::cout;
@@ -28,14 +22,12 @@ class PokimonMaster {
 	Pokimon& findPokimonInLevelTree(int id);
 	void addPokimonInIdTree(Pokimon& pokimon);
 	void addPokimonInLevelTree(Pokimon& pokimon);
-//	void updateLevelHelper(AVLTree<Pokimon,pair<int,int>,compareByLevel >* tree);
 	void updateLevelsForTree(int stoneCode, int stoneFactor,
 			AVLTree<Pokimon, pair<int, int>, compareByLevel>* tree,
 			pair<Pokimon, pair<int, int> >** unionArrs);
 
 public:
 	PokimonMaster();
-//	PokimonMaster(PokimonMaster& pmaster);
 	virtual ~PokimonMaster();
 	void addTrainer(int id);
 	//ALLOCATION_ERROR - In case of an allocation error.
@@ -50,7 +42,6 @@ public:
 	void GetAllPokemonsByLevel(int trainerID, int **pokemons,
 			int *numOfPokemon);
 	void UpdateLevels(int stoneCode, int stoneFactor);
-	//void printAllTrees();
 
 };
 
@@ -114,14 +105,14 @@ public:
 class print {
 public:
 	void operator()(int x, Pokimon& value) {
-		cout << value << ",";
+		cout << value << ","<<endl;
 	}
 };
 
 class print2 {
 public:
 	void operator()(pair<int, int> x, Pokimon& value) {
-		cout << value << ",";
+		cout << value << ","<<endl;
 	}
 };
 

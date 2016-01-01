@@ -386,30 +386,42 @@ void tryfunc(int** arr){
 int main() {
 
 void* pokimonMaster=Init();
-AddTrainer (pokimonMaster,4);
+AddTrainer (pokimonMaster,1);
+AddTrainer (pokimonMaster,2);
 AddTrainer (pokimonMaster,3);
-CatchPokemon (pokimonMaster,101, 4 ,50);
-AddTrainer (pokimonMaster,5);
-CatchPokemon (pokimonMaster,101, 5 ,25);
-CatchPokemon (pokimonMaster,102, 5, 25);
-int top;
-GetTopPokemon (pokimonMaster,-1,&top);
-LevelUp (pokimonMaster,102, 26);
-//GetAllPokemonsByLevel(pokimonMaster,-1);
-FreePokemon (pokimonMaster,102);
-//GetAllPokemonsByLevel(pokimonMaster,-1);
-GetTopPokemon (pokimonMaster,5,&top);
-EvolvePokemon (pokimonMaster,101, 105);
-GetTopPokemon (pokimonMaster,-1,&top);
-EvolvePokemon(pokimonMaster, 105, 101);
-CatchPokemon(pokimonMaster ,105, 4 ,5);
-CatchPokemon(pokimonMaster, 120, 5, 15);
-//GetAllPokemonsByLevel(pokimonMaster,-1);
-//GetAllPokemonsByLevel (pokimonMaster,4);
-//GetAllPokemonsByLevel (pokimonMaster,5);
-UpdateLevels (pokimonMaster,5, 4);
-int* arr;
-GetAllPokemonsByLevel (pokimonMaster,-1,&arr,&top);
+AddTrainer (pokimonMaster,4);
+for(int i=1;i<200;i++){
+	CatchPokemon (pokimonMaster,i, 1 ,i);
+	i++;
+	CatchPokemon (pokimonMaster,i, 2 ,i);
+	i++;
+	CatchPokemon (pokimonMaster,i, 3 ,i);
+	i++;
+	CatchPokemon (pokimonMaster,i, 4 ,i);
+}
+UpdateLevels(pokimonMaster,10,2);
+
+//AddTrainer (pokimonMaster,5);
+//CatchPokemon (pokimonMaster,101, 5 ,25);
+//CatchPokemon (pokimonMaster,102, 5, 25);
+//int top;
+//GetTopPokemon (pokimonMaster,-1,&top);
+//LevelUp (pokimonMaster,102, 26);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+//FreePokemon (pokimonMaster,102);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+//GetTopPokemon (pokimonMaster,5,&top);
+//EvolvePokemon (pokimonMaster,101, 105);
+//GetTopPokemon (pokimonMaster,-1,&top);
+//EvolvePokemon(pokimonMaster, 105, 101);
+//CatchPokemon(pokimonMaster ,105, 4 ,5);
+//CatchPokemon(pokimonMaster, 120, 5, 15);
+////GetAllPokemonsByLevel(pokimonMaster,-1);
+////GetAllPokemonsByLevel (pokimonMaster,4);
+////GetAllPokemonsByLevel (pokimonMaster,5);
+//UpdateLevels (pokimonMaster,5, 4);
+//int* arr;
+//GetAllPokemonsByLevel (pokimonMaster,-1,&arr,&top);
 Quit(&pokimonMaster);
 }
 

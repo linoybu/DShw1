@@ -1,9 +1,4 @@
-/*
- * Pokimon.h
- *
- *  Created on: Nov 16, 2015
- *      Author: linoy
- */
+
 
 #ifndef POKIMON_H_
 #define POKIMON_H_
@@ -46,8 +41,7 @@ public:
 
 
 
-//** they say that the better id is the smallest one,but im not sure
-//** check later
+
 class compareByID {
 public:
 	int operator()(int firstPok, int secPok) {
