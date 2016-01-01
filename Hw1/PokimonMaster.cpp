@@ -435,7 +435,8 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	this->levelPokimonTree->cleanTree();
 	cout<<"array"<<endl;
 	for(int i=0;i<numOfPok;i++){
-		cout<<unionArrs[i]<<endl;
+
+		cout<<unionArrs[i]->getValue()<<endl;
 	}
 	this->levelPokimonTree->arrToAvlTree(numOfPok, unionArrs);
 	this->bestPokimon = &this->levelPokimonTree->getMax();
