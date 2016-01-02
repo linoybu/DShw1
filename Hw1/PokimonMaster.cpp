@@ -148,6 +148,7 @@ void PokimonMaster::LevelUp(int pokemonID, int levelIncrease) {
 	}
 	Pokimon& pokimon = findPokimonInIdTree(pokemonID);
 
+
 	// fix level tree :
 	int id = pokimon.getId(), level = pokimon.getLevel(), trainerId =
 			pokimon.getTrainerId();
@@ -398,10 +399,10 @@ public:
 			stoneCode(stoneCode), stoneFactor(stoneFactor) {
 	}
 	void operator()(int& key, Pokimon& value) {
-		if (value.getLevel() % stoneCode == 0) {
+		if (value.getId() % stoneCode == 0) {
 			int newLevel = value.getLevel() * stoneFactor;
 			value.setLevel(newLevel);
-		//	key = newLevel;
+			//key = newLevel;
 		}
 	}
 
@@ -416,13 +417,6 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	}
 
 	//** update levels tree
-	///TODO
-		print pri = print();
-		this->idPokimonTree->inOrder(pri);
-		cout<<""<<endl;
-		print2 pri2 = print2();
-		this->levelPokimonTree->inOrder(pri2);
-		//TODO
 	int numOfPok = 0;
 	numOfPok = this->levelPokimonTree->getNumOfVertices();
 	if (!numOfPok) {
@@ -433,11 +427,6 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 	this->updateLevelsForTree(stoneCode, stoneFactor, this->levelPokimonTree,
 			unionArrs);
 	this->levelPokimonTree->cleanTree();
-	cout<<"array"<<endl;
-	for(int i=0;i<numOfPok;i++){
-
-		cout<<unionArrs[i]->getValue()<<endl;
-	}
 	this->levelPokimonTree->arrToAvlTree(numOfPok, unionArrs);
 	this->bestPokimon = &this->levelPokimonTree->getMax();
 	for (int i = 0; i < numOfPok; i++) {
@@ -469,19 +458,9 @@ void PokimonMaster::UpdateLevels(int stoneCode, int stoneFactor) {
 
 	}
 	//*** update id tree
-	///TODO
-		this->idPokimonTree->inOrder(pri);
-		cout<<""<<endl;
-		this->levelPokimonTree->inOrder(pri2);
-		//TODO
 	UpdateLevelForIdTree updateFunc = UpdateLevelForIdTree(stoneCode,
 			stoneFactor);
 	this->idPokimonTree->inOrder(updateFunc);
-///TODO
-	this->idPokimonTree->inOrder(pri);
-	cout<<""<<endl;
-	this->levelPokimonTree->inOrder(pri2);
-	//TODO
 }
 
 

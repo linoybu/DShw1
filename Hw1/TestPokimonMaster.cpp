@@ -390,14 +390,14 @@ AddTrainer (pokimonMaster,1);
 AddTrainer (pokimonMaster,2);
 AddTrainer (pokimonMaster,3);
 AddTrainer (pokimonMaster,4);
-for(int i=1;i<200;i++){
+for(int i=1;i<=37;i++){
 	CatchPokemon (pokimonMaster,i, 1 ,i);
-	i++;
-	CatchPokemon (pokimonMaster,i, 2 ,i);
-	i++;
-	CatchPokemon (pokimonMaster,i, 3 ,i);
-	i++;
-	CatchPokemon (pokimonMaster,i, 4 ,i);
+//	i++;
+//	CatchPokemon (pokimonMaster,i, 2 ,i);
+//	i++;
+//	CatchPokemon (pokimonMaster,i, 3 ,i);
+//	i++;
+//	CatchPokemon (pokimonMaster,i, 4 ,i);
 }
 UpdateLevels(pokimonMaster,10,2);
 

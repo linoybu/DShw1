@@ -774,8 +774,8 @@ void AVLTree<T, Key, CompareKey>::arrToAvlTree(int arrSize, pair<T, Key>** arr) 
 		return;
 	}
 	//int height =log2( pow(2,(ceil(log2(arrSize))))-1)+1;
-	int height =ceil(log2(arrSize+1))-1;
-	int numberOfLeaves = arrSize - (pow(2, height - 1) - 1);
+	int height =floor(log2(arrSize));
+	int numberOfLeaves = arrSize - (pow(2, height) - 1);
 	this->root = this->fillTreeWithBlankNodes(height+1, root);
 	this->numOfVertices = arrSize;
 	fillTreeInlineFunc<T, Key, CompareKey> func = fillTreeInlineFunc<T, Key,
